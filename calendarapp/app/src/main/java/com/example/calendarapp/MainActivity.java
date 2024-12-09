@@ -37,53 +37,45 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    // スタートボタンの処理
     public void onStart(View v) {
-        if (!isChronometerRunning) { // すでに動作中でない場合のみスタート
+        if (!isChronometerRunning) {
             chronometer.setBase(SystemClock.elapsedRealtime() - elapsedTime);
             chronometer.start();
             isChronometerRunning = true;
         }
     }
 
-    // ストップボタンの処理
     public void onStop(View v) {
         if (isChronometerRunning) {
             chronometer.stop();
             elapsedTime = SystemClock.elapsedRealtime() - chronometer.getBase();
             isChronometerRunning = false;
         }
-
-        // シェアボタンをポップアップとして表示
         showSharePopup();
     }
 
-    // シェアボタンをポップアップとして表示する
     private void showSharePopup() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("シェアしますか？");
 
-        // ポップアップに「シェア」ボタンを追加
         builder.setPositiveButton("シェア", (dialog, which) -> {
-            openImagePicker(); // 画像選択を開始
+            openImagePicker();
         });
 
-        // キャンセルボタン
         builder.setNegativeButton("キャンセル", (dialog, which) -> {
-            navigateToRecordActivity(); // キャンセル後に記録画面に遷移
+            navigateToRecordActivity();
         });
 
         AlertDialog dialog = builder.create();
-        dialog.show(); // ポップアップを表示
+        dialog.show();
     }
 
-    // ギャラリーから画像を選択する
     private static final int REQUEST_IMAGE_PICK = 1;
 
     @SuppressLint("IntentReset")
     private void openImagePicker() {
-        @SuppressLint("IntentReset") Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        intent.setType("image/*"); // 画像のみ選択可能
+        Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        intent.setType("image/*");
         startActivityForResult(intent, REQUEST_IMAGE_PICK);
     }
 
@@ -94,19 +86,16 @@ public class MainActivity extends AppCompatActivity {
         if (requestCode == REQUEST_IMAGE_PICK && resultCode == RESULT_OK && data != null) {
             Uri selectedImageUri = data.getData();
             if (selectedImageUri != null) {
-                shareImageToInstagram(selectedImageUri); // Instagramにシェア処理
+                shareImageToInstagram(selectedImageUri);
             } else {
                 Toast.makeText(this, "画像を選択できませんでした", Toast.LENGTH_SHORT).show();
-                navigateToRecordActivity(); // 記録画面に遷移
+                navigateToRecordActivity();
             }
-        } else if (requestCode == 123 && resultCode == RESULT_OK) {  // Instagramから戻ってきた際
-            navigateToRecordActivity(); // 記録画面に遷移
         } else {
-            navigateToRecordActivity(); // ユーザーが画像選択をキャンセルした場合やエラーの場合
+            navigateToRecordActivity();
         }
     }
 
-    // Instagramに画像を共有する
     private void shareImageToInstagram(Uri imageUri) {
         Intent shareIntent = new Intent();
         shareIntent.setAction(Intent.ACTION_SEND);
@@ -115,22 +104,28 @@ public class MainActivity extends AppCompatActivity {
         shareIntent.setPackage("com.instagram.android");
 
         try {
-            startActivityForResult(shareIntent, 123); // Instagramにシェアして戻ってきたときのリクエストコードを設定
+            startActivityForResult(shareIntent, 123);
         } catch (ActivityNotFoundException e) {
             Toast.makeText(this, "Instagramがインストールされていません", Toast.LENGTH_SHORT).show();
-            navigateToRecordActivity(); // Instagramがインストールされていない場合に記録画面に遷移
+            navigateToRecordActivity();
         }
     }
 
-    // 記録画面に遷移する
     private void navigateToRecordActivity() {
-        Intent intent = new Intent(this, RecordActivity.class);
-        intent.putExtra("elapsed_time", elapsedTime); // 経過時間を渡す
+        Intent intent = new Intent(this, CalendarActivity.class);
+        intent.putExtra("elapsed_time", elapsedTime);
+        intent.putExtra("selected_date", getCurrentDate());
         startActivity(intent);
-        finish(); // 現在の画面を終了
+        finish();
     }
 
-    // 時間を「時:分:秒」の形式にフォーマット
+    @SuppressLint("SimpleDateFormat")
+    private String getCurrentDate() {
+        java.util.Calendar calendar = java.util.Calendar.getInstance();
+        java.text.SimpleDateFormat dateFormat = new java.text.SimpleDateFormat("yyyy/MM/dd");
+        return dateFormat.format(calendar.getTime());
+    }
+
     @SuppressLint("DefaultLocale")
     private String formatElapsedTime(long elapsedMillis) {
         int hours = (int) (elapsedMillis / 3600000);

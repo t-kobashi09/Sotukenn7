@@ -34,6 +34,8 @@ public class CalendarActivity extends AppCompatActivity {
         EditText scheduleEditText = findViewById(R.id.scheduleEditText);
         Button saveButton = findViewById(R.id.saveButton);
         Button backButton = findViewById(R.id.backButton);
+//        Button deleteButton = findViewById(R.id.deleteButton); // 追加
+//        Button allDataButton = findViewById(R.id.allDataButton); // 追加
         TextView receivedValueTextView = findViewById(R.id.received_value);
 
         // SharedPreferencesを使ってデータを保存
@@ -52,116 +54,116 @@ public class CalendarActivity extends AppCompatActivity {
 
         // 日付選択時の処理
         calendarView.setOnDateChangeListener((view, year, month, dayOfMonth) -> {
-            // 選択された日付
             selectedDate = year + "/" + (month + 1) + "/" + dayOfMonth;
-
-            // 日付を表示
             dateTextView.setText("Selected Date: " + selectedDate);
-
-            // 保存されているスケジュールを表示
-            if (scheduleData.containsKey(selectedDate)) {
-                scheduleEditText.setText(scheduleData.get(selectedDate));
-            } else {
-                scheduleEditText.setText(""); // 何もない場合は空欄
-            }
-
-            // 保存されている計測時間を表示
-            if (timeData.containsKey(selectedDate)) {
-                long elapsedTime = timeData.get(selectedDate);
-                String formattedTime = formatElapsedTime(elapsedTime);
-                receivedValueTextView.setText("計測時間: " + formattedTime);
-            } else {
-                receivedValueTextView.setText("計測時間: 00:00:00");
-            }
+            getSelectedDateData(selectedDate, scheduleEditText, receivedValueTextView);
         });
 
         // 保存ボタンの処理
         saveButton.setOnClickListener(v -> {
-            // 入力されたスケジュールを取得
             String schedule = scheduleEditText.getText().toString();
-
-            // スケジュールを保存
             scheduleData.put(selectedDate, schedule);
-
-            // 計測時間を保存（加算処理）
             long currentElapsedTime = timeData.getOrDefault(selectedDate, 0L);
             timeData.put(selectedDate, currentElapsedTime);
-
-            // SharedPreferencesに保存
             saveData();
-
-            // 保存完了の通知
             Toast.makeText(CalendarActivity.this, "Schedule saved for " + selectedDate, Toast.LENGTH_SHORT).show();
         });
 
         // 戻るボタンの処理
         backButton.setOnClickListener(v -> finish());
 
-        // タイマー
-        // Intentから値を取得
+//        // 削除ボタンの処理（追加）
+//        deleteButton.setOnClickListener(v -> {
+//            deleteSelectedDateData(selectedDate);
+//            scheduleEditText.setText("");
+//            receivedValueTextView.setText("計測時間: 00:00:00");
+//        });
+//
+//        // 全データ取得ボタンの処理（追加）
+//        allDataButton.setOnClickListener(v -> getAllData());
+
+        // タイマーのデータをインテントから受け取る
         Intent intent = getIntent();
         long elapsedTime = intent.getLongExtra("elapsed_time", 0);
-
-        // 計測時間を加算（既存の時間があれば加算）
         long existingTime = timeData.getOrDefault(selectedDate, 0L);
         long newTime = existingTime + elapsedTime;
         timeData.put(selectedDate, newTime);
-
-        // 計測時間をSharedPreferencesに保存
         saveData();
-
-        // ミリ秒を「時:分:秒」の形式に変換
         String formattedTime = formatElapsedTime(newTime);
-
-        // TextViewに表示
         receivedValueTextView.setText("計測時間: " + formattedTime);
     }
 
-    // SharedPreferencesにデータを保存するメソッド
+    // 選択した日付のデータを取得
+    @SuppressLint("SetTextI18n")
+    private void getSelectedDateData(String date, EditText scheduleEditText, TextView receivedValueTextView) {
+        if (scheduleData.containsKey(date)) {
+            scheduleEditText.setText(scheduleData.get(date));
+        } else {
+            scheduleEditText.setText(""); // スケジュールがない場合
+        }
+        if (timeData.containsKey(date)) {
+            long elapsedTime = timeData.get(date);
+            String formattedTime = formatElapsedTime(elapsedTime);
+            receivedValueTextView.setText("計測時間: " + formattedTime);
+        } else {
+            receivedValueTextView.setText("計測時間: 00:00:00");
+        }
+    }
+
+    // 選択した日付のデータを削除（追加）
+    private void deleteSelectedDateData(String date) {
+        scheduleData.remove(date);
+        timeData.remove(date);
+        saveData();
+        Toast.makeText(this, date + " のデータを削除しました。", Toast.LENGTH_SHORT).show();
+    }
+
+    // すべてのデータを取得（追加）
+    private void getAllData() {
+        StringBuilder allData = new StringBuilder();
+        for (String date : scheduleData.keySet()) {
+            String schedule = scheduleData.get(date);
+            String formattedTime = formatElapsedTime(timeData.getOrDefault(date, 0L));
+            allData.append(date).append(": ").append(schedule).append(" / ").append(formattedTime).append("\n");
+        }
+        Toast.makeText(this, allData.toString(), Toast.LENGTH_LONG).show();
+    }
+
+    // SharedPreferencesにデータを保存
     private void saveData() {
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        // スケジュールデータを保存
         for (String date : scheduleData.keySet()) {
             editor.putString(date + "_schedule", scheduleData.get(date));
         }
-        // 計測時間データを保存
         for (String date : timeData.keySet()) {
             editor.putLong(date + "_time", timeData.get(date));
         }
         editor.apply();
     }
 
-    // 保存されたデータを読み込むメソッド
+    // 保存されたデータを読み込む
     private void loadSavedData() {
-        // スケジュールデータを読み込む
         for (String date : sharedPreferences.getAll().keySet()) {
             if (date.endsWith("_schedule")) {
                 String dateKey = date.replace("_schedule", "");
                 scheduleData.put(dateKey, sharedPreferences.getString(date, ""));
-            }
-        }
-
-        // 計測時間データを読み込む
-        for (String date : sharedPreferences.getAll().keySet()) {
-            if (date.endsWith("_time")) {
+            } else if (date.endsWith("_time")) {
                 String dateKey = date.replace("_time", "");
                 timeData.put(dateKey, sharedPreferences.getLong(date, 0));
             }
         }
     }
 
-    // カレンダーの初期日付を取得
     private String getCurrentDate(CalendarView calendarView) {
         long currentDate = calendarView.getDate();
         java.util.Calendar calendar = java.util.Calendar.getInstance();
         calendar.setTimeInMillis(currentDate);
         int year = calendar.get(java.util.Calendar.YEAR);
-        int month = calendar.get(java.util.Calendar.MONTH) + 1; // 月は0から始まる
+        int month = calendar.get(java.util.Calendar.MONTH) + 1;
         int day = calendar.get(java.util.Calendar.DAY_OF_MONTH);
         return year + "/" + month + "/" + day;
     }
 
-    // 時間を「時:分:秒」の形式にフォーマット
     @SuppressLint("DefaultLocale")
     private String formatElapsedTime(long elapsedMillis) {
         int hours = (int) (elapsedMillis / 3600000);
