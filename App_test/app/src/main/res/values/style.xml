@@ -1,0 +1,6 @@
+<resources>
+    <!-- アプリ全体で使うテーマ -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- 必要に応じてカスタマイズ -->
+    </style>
+</resources>
