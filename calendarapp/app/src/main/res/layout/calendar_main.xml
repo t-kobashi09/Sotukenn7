@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <!-- CalendarView -->
+    <CalendarView
+        android:id="@+id/calendarView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <!-- 選択した日付を表示するテキストビュー -->
+    <TextView
+        android:id="@+id/dateTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        android:text="@string/calender_date"
+        android:textSize="18sp" />
+
+    <!-- スケジュール入力用 -->
+    <EditText
+        android:id="@+id/scheduleEditText"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:autofillHints=""
+        android:gravity="top"
+        android:hint="@string/schedule_hint"
+        android:inputType="textMultiLine" />
+
+    <!-- 保存ボタン -->
+    <Button
+        android:id="@+id/saveButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/calender_save" />
+
+    <!-- 戻るボタン -->
+    <Button
+        android:id="@+id/backButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/calender_back" />
+
+    <TextView
+        android:id="@+id/received_value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="値がここに表示されます"
+        android:textSize="18sp"
+        android:textColor="#000000"
+        android:gravity="center" />
+</LinearLayout>

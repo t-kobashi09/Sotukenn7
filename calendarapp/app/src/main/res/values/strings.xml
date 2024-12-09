@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">calendarapp</string>
+
+    <string name="clock">00:00:00</string>
+    <string name="start">スタート</string>
+    <string name="stop">ストップ</string>
+    <string name="keisoku">計測時間</string>
+    <string name="share_button">Instagramにシェア</string>
+
+    <!-- カレンダー関係 -->
+    <string name="calender_open">Open Calendar</string>
+    <string name="calender_date">Selected Date:</string>
+    <string name="calender_save">Save Schedule</string>
+    <string name="calender_back">Back to Main</string>
+    <string name="schedule_hint">Enter your schedule here</string>
+</resources>
