@@ -2,16 +2,19 @@ package com.example.app_test;
 
 import android.Manifest;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import com.google.android.gms.location.LocationRequest;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.widget.Button;
 import android.os.Looper;
 import android.util.Log;
 import android.view.View;
+import android.widget.Chronometer;
 import android.widget.EditText;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
@@ -29,6 +32,11 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 
 public class MainActivity extends AppCompatActivity {
+    private Chronometer chronometer;
+    // 経過時間を保持
+    private long elapsedTime = 0;
+    // 計測中かどうかを管理
+    private boolean isChronometerRunning = false;
     //緯度
     private double _latitude = 0;
     //経度
@@ -59,6 +67,21 @@ public class MainActivity extends AppCompatActivity {
             showMemoDialog();
         });
 
+        //タイマー機能
+        // Chronometerの取得
+        chronometer = findViewById(R.id.chron_text);
+
+        // Chronometerの初期設定
+        chronometer.setText(formatElapsedTime(0)); // 初期値を「00:00:00」に設定
+        chronometer.setOnChronometerTickListener(chronometer -> {
+            long elapsedMillis = SystemClock.elapsedRealtime() - chronometer.getBase();
+            chronometer.setText(formatElapsedTime(elapsedMillis)); // フォーマットした時間をセット
+        });
+
+
+
+        //タイマー機能ここまで
+
         // マップボタンの設定
         // FusedLocationProviderClientのインスタンスを作成
         _fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
@@ -74,8 +97,8 @@ public class MainActivity extends AppCompatActivity {
         Button recordButton = findViewById(R.id.button_record);
         recordButton.setOnClickListener(v -> {
             // 記録画面に遷移
-            Intent intent = new Intent(MainActivity.this, RecordActivity.class);
-            startActivity(intent);
+//            Intent intent_result = new Intent(MainActivity.this);
+//            startActivity(intent_result);
         });
 
     }
@@ -121,6 +144,37 @@ public class MainActivity extends AppCompatActivity {
        }
     }
 
+    // 時間を「時:分:秒」の形式にフォーマット
+    @SuppressLint("DefaultLocale")
+    private String formatElapsedTime(long elapsedMillis) {
+        int hours = (int) (elapsedMillis / 3600000);
+        int minutes = (int) (elapsedMillis % 3600000) / 60000;
+        int seconds = (int) (elapsedMillis % 60000) / 1000;
+        return String.format("%02d:%02d:%02d", hours, minutes, seconds);
+    }
+
+
+    //スタートボタン押下時
+    public void onStart(View v) {
+        if (!isChronometerRunning) {
+            chronometer.setBase(SystemClock.elapsedRealtime() - elapsedTime);
+            chronometer.start();
+            isChronometerRunning = true;
+        }
+    }
+
+    //ストップボタン押下時
+    public void onStop(View v) {
+        if (isChronometerRunning) {
+            chronometer.stop();
+            elapsedTime = SystemClock.elapsedRealtime() - chronometer.getBase();
+            isChronometerRunning = false;
+        }
+//        インスタシェア質問ポップアップ表示
+//        showSharePopup();
+    }
+
+
     // メモ表示用ダイアログ
     private void showMemoDialog() {
         // メモの内容をここで設定
@@ -149,29 +203,6 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public LocationRequest get_locationRequest() {
-        return _locationRequest;
-    }
-
-    public void set_locationRequest(LocationRequest _locationRequest) {
-        this._locationRequest = _locationRequest;
-    }
-
-    public FusedLocationProviderClient get_fusedLocationClient() {
-        return _fusedLocationClient;
-    }
-
-    public void set_fusedLocationClient(FusedLocationProviderClient _fusedLocationClient) {
-        this._fusedLocationClient = _fusedLocationClient;
-    }
-
-    public OnUpdateLocation get_onUpdateLocation() {
-        return _onUpdateLocation;
-    }
-
-    public void set_onUpdateLocation(OnUpdateLocation _onUpdateLocation) {
-        this._onUpdateLocation = _onUpdateLocation;
-    }
 
     private class OnUpdateLocation extends LocationCallback{
         @Override
