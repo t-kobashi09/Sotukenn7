@@ -1,4 +1,6 @@
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -8,15 +10,6 @@
 
 
     <!-- スタートボタン -->
-    <!-- ここまで -->
-
-    <!-- ストップボタン -->
-    <!-- ここまで -->
-
-
-    <!-- メモボタン -->
-
-
     <Button
         android:id="@+id/button"
         android:layout_width="0dp"
@@ -34,7 +27,9 @@
         app:layout_constraintHeight_default="wrap"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent" />
+    <!-- ここまで -->
 
+    <!-- ストップボタン -->
     <Button
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -51,7 +46,9 @@
         app:layout_constraintHeight_default="wrap"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent" />
+    <!-- ここまで -->
 
+    <!-- メモボタン -->
     <Button
         android:id="@+id/button_memo"
         android:layout_width="wrap_content"
@@ -131,7 +128,7 @@
         app:layout_constraintVertical_bias="0.55" />
     <!-- ここまで -->
 
-    <!--  -->
+    <!-- カウンター -->
     <Chronometer
             android:id="@+id/chron_text"
             android:layout_width="wrap_content"
@@ -143,6 +140,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.9" />
+    <!-- ここまで -->
 
     <!-- カメラボタン -->
     <Button

@@ -3,6 +3,7 @@ package com.example.app_test;
 import android.Manifest;
 
 import android.annotation.SuppressLint;
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
@@ -10,26 +11,23 @@ import com.google.android.gms.location.LocationRequest;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.SystemClock;
+import android.provider.MediaStore;
 import android.widget.Button;
 import android.os.Looper;
-import android.util.Log;
 import android.view.View;
 import android.widget.Chronometer;
-import android.widget.EditText;
-import android.widget.TextView;
+import android.widget.Toast;
+
+import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.location.Priority;
-
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 
 public class MainActivity extends AppCompatActivity {
     private Chronometer chronometer;
@@ -47,12 +45,14 @@ public class MainActivity extends AppCompatActivity {
     private LocationRequest _locationRequest;
     //位置情報更新処理コールバック
     private OnUpdateLocation _onUpdateLocation;
+    //リザルト画像
+    private static final int REQUEST_IMAGE_PICK = 1;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        EdgeToEdge.enable(this);
+        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
 
         // アクションバーを非表示にする
@@ -60,14 +60,14 @@ public class MainActivity extends AppCompatActivity {
             getSupportActionBar().hide();
         }
 
-        // メモボタンの設定
+    //メモボタンの設定
         Button memoButton = findViewById(R.id.button_memo);
         memoButton.setOnClickListener(v -> {
             // メモの内容をポップアップで表示
             showMemoDialog();
         });
 
-        //タイマー機能
+    //タイマー機能
         // Chronometerの取得
         chronometer = findViewById(R.id.chron_text);
 
@@ -78,11 +78,7 @@ public class MainActivity extends AppCompatActivity {
             chronometer.setText(formatElapsedTime(elapsedMillis)); // フォーマットした時間をセット
         });
 
-
-
-        //タイマー機能ここまで
-
-        // マップボタンの設定
+    //マップボタンの設定
         // FusedLocationProviderClientのインスタンスを作成
         _fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
 
@@ -94,12 +90,12 @@ public class MainActivity extends AppCompatActivity {
         _onUpdateLocation = new OnUpdateLocation();
 
         // 記録ボタンの設定
-        Button recordButton = findViewById(R.id.button_record);
-        recordButton.setOnClickListener(v -> {
-            // 記録画面に遷移
-//            Intent intent_result = new Intent(MainActivity.this);
-//            startActivity(intent_result);
-        });
+//        Button recordButton = findViewById(R.id.button_record);
+//        recordButton.setOnClickListener(v -> {
+//            // 記録画面に遷移
+//            Intent intent = new Intent(MainActivity.this);
+//            startActivity(intent);
+//        });
 
     }
 
@@ -153,6 +149,14 @@ public class MainActivity extends AppCompatActivity {
         return String.format("%02d:%02d:%02d", hours, minutes, seconds);
     }
 
+    // 日時取得
+    @SuppressLint("SimpleDateFormat")
+    private String getCurrentDate() {
+        java.util.Calendar calendar = java.util.Calendar.getInstance();
+        java.text.SimpleDateFormat dateFormat = new java.text.SimpleDateFormat("yyyy/MM/dd");
+        return dateFormat.format(calendar.getTime());
+    }
+
 
     //スタートボタン押下時
     public void onStart(View v) {
@@ -170,8 +174,78 @@ public class MainActivity extends AppCompatActivity {
             elapsedTime = SystemClock.elapsedRealtime() - chronometer.getBase();
             isChronometerRunning = false;
         }
-//        インスタシェア質問ポップアップ表示
-//        showSharePopup();
+        //インスタシェア質問/画面遷移ポップアップ表示
+        showSharePopup();
+    }
+
+//インスタシェア可否質問/画面遷移ポップアップ表示
+    private void showSharePopup() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("シェアしますか？");
+
+        builder.setPositiveButton("シェア", (dialog, which) -> {
+            openImagePicker();
+        });
+
+        builder.setNegativeButton("キャンセル", (dialog, which) -> {
+            navigateToRecordActivity();
+        });
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
+    //画像生成
+    @SuppressLint("IntentReset")
+    private void openImagePicker() {
+        Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        intent.setType("image/*");
+        startActivityForResult(intent, REQUEST_IMAGE_PICK);
+    }
+
+    //画像選択
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == REQUEST_IMAGE_PICK && resultCode == RESULT_OK && data != null) {
+            Uri selectedImageUri = data.getData();
+            if (selectedImageUri != null) {
+                shareImageToInstagram(selectedImageUri);
+            } else {
+                Toast.makeText(this, "画像を選択できませんでした", Toast.LENGTH_SHORT).show();
+                navigateToRecordActivity();
+            }
+        } else {
+            navigateToRecordActivity();
+        }
+    }
+
+    //インスタ遷移
+    private void shareImageToInstagram(Uri imageUri) {
+        Intent shareIntent = new Intent();
+        shareIntent.setAction(Intent.ACTION_SEND);
+        shareIntent.setType("image/*");
+        shareIntent.putExtra(Intent.EXTRA_STREAM, imageUri);
+        shareIntent.setPackage("com.instagram.android");
+
+        try {
+            startActivityForResult(shareIntent, 123);
+        } catch (ActivityNotFoundException e) {
+            Toast.makeText(this, "Instagramがインストールされていません", Toast.LENGTH_SHORT).show();
+            navigateToRecordActivity();
+        }
+    }
+
+
+
+    //画面遷移
+    private void navigateToRecordActivity() {
+        Intent intent = new Intent(this, CalendarActivity.class);
+        intent.putExtra("elapsed_time", elapsedTime);
+        intent.putExtra("selected_date", getCurrentDate());
+        startActivity(intent);
+        finish();
     }
 
 
@@ -204,6 +278,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    //現在地取得
     private class OnUpdateLocation extends LocationCallback{
         @Override
         public void onLocationResult(LocationResult locationResult){
@@ -216,17 +291,12 @@ public class MainActivity extends AppCompatActivity {
                     _latitude = location.getLatitude();
                     //緯度取得
                     _longitude = location.getLongitude();
-                    //TextViewに表示
-//                    TextView tvLatitude = findViewById(R.id.tvLatitude);
-//                    tvLatitude.setText(Double.toString(_latitude));
-//                    TextView tvLongitude = findViewById(R.id.tvLongitude);
-//                    tvLongitude.setText(Double.toString(_longitude));
                 }
-
             }
-
-
         }
+
+
+
     }
 
 

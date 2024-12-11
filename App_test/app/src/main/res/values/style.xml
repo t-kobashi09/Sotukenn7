@@ -1,6 +1,8 @@
 <resources>
     <!-- アプリ全体で使うテーマ -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowBackground">@color/window_background1</item>
         <!-- 必要に応じてカスタマイズ -->
     </style>
+
 </resources>

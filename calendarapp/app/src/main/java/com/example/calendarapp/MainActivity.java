@@ -113,7 +113,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void navigateToRecordActivity() {
         Intent intent = new Intent(this, CalendarActivity.class);
-        intent.putExtra("elapsed_time", elapsedTime);
+        intent.putExtra("elapsed_asfdtime", elapsedTime);
         intent.putExtra("selected_date", getCurrentDate());
         startActivity(intent);
         finish();
