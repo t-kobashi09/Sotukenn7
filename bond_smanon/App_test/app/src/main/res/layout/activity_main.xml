@@ -30,36 +30,36 @@
     <!-- ここまで -->
 
     <!-- ストップボタン -->
-    <!--    <Button-->
-<!--        android:layout_width="0dp"-->
-<!--        android:layout_height="0dp"-->
-<!--        android:layout_marginBottom="216dp"-->
-<!--        android:background="@android:color/transparent"-->
-<!--        android:elevation="0dp"-->
-<!--        android:onClick="onStop"-->
-<!--        android:stateListAnimator="@null"-->
-<!--        android:text="@string/stop"-->
-<!--        android:textColor="@android:color/black"-->
-<!--        android:textSize="45sp"-->
-<!--        app:layout_constraintBottom_toBottomOf="parent"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintHeight_default="wrap"-->
-<!--        app:layout_constraintHorizontal_bias="0.0"-->
-<!--        app:layout_constraintStart_toStartOf="parent" />-->
+        <Button
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="216dp"
+        android:background="@android:color/transparent"
+        android:elevation="0dp"
+        android:onClick="onStop"
+        android:stateListAnimator="@null"
+        android:text="@string/stop"
+        android:textColor="@android:color/black"
+        android:textSize="45sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_default="wrap"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent" />
     <!-- ここまで -->
 
     <!-- メモボタン -->
 
-    <Button
-        android:layout_width="220dp"
-        android:layout_height="86dp"
-        android:layout_gravity="center"
-        android:onClick="onStop"
-        android:text="@string/stop"
-        android:textSize="40sp"
-        tools:layout_editor_absoluteX="93dp"
-        tools:layout_editor_absoluteY="460dp"
-        tools:ignore="MissingConstraints" />
+<!--    <Button-->
+<!--        android:layout_width="220dp"-->
+<!--        android:layout_height="86dp"-->
+<!--        android:layout_gravity="center"-->
+<!--        android:onClick="onStop"-->
+<!--        android:text="@string/stop"-->
+<!--        android:textSize="40sp"-->
+<!--        tools:layout_editor_absoluteX="93dp"-->
+<!--        tools:layout_editor_absoluteY="460dp"-->
+<!--        tools:ignore="MissingConstraints" />-->
 
     <Button
         android:id="@+id/button_memo"
