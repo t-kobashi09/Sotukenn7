@@ -1,5 +1,6 @@
 package com.example.app_test;
 
+
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
@@ -10,6 +11,7 @@ import android.widget.CalendarView;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.HashMap;
@@ -25,7 +27,7 @@ public class CalendarActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.calendar_main); // XMLファイル名を確認
+        setContentView(R.layout.calendar_main);
 
         // UI要素の取得
         CalendarView calendarView = findViewById(R.id.calendarView);
@@ -33,6 +35,8 @@ public class CalendarActivity extends AppCompatActivity {
         EditText scheduleEditText = findViewById(R.id.scheduleEditText);
         Button saveButton = findViewById(R.id.saveButton);
         Button backButton = findViewById(R.id.backButton);
+//        Button deleteButton = findViewById(R.id.deleteButton); // 追加
+//        Button allDataButton = findViewById(R.id.allDataButton); // 追加
         TextView receivedValueTextView = findViewById(R.id.received_value);
 
         // SharedPreferencesを使ってデータを保存
@@ -67,11 +71,17 @@ public class CalendarActivity extends AppCompatActivity {
         });
 
         // 戻るボタンの処理
-        backButton.setOnClickListener(v -> {
-            Intent intent = new Intent(CalendarActivity.this, MainActivity.class); // MainActivityに置き換え
-            startActivity(intent);
-            finish();
-        });
+        backButton.setOnClickListener(v -> finish());
+
+//        // 削除ボタンの処理（追加）
+//        deleteButton.setOnClickListener(v -> {
+//            deleteSelectedDateData(selectedDate);
+//            scheduleEditText.setText("");
+//            receivedValueTextView.setText("計測時間: 00:00:00");
+//        });
+//
+//        // 全データ取得ボタンの処理（追加）
+//        allDataButton.setOnClickListener(v -> getAllData());
 
         // タイマーのデータをインテントから受け取る
         Intent intent = getIntent();
@@ -84,7 +94,7 @@ public class CalendarActivity extends AppCompatActivity {
         receivedValueTextView.setText("計測時間: " + formattedTime);
     }
 
-// 選択した日付のデータを取得
+    // 選択した日付のデータを取得
     @SuppressLint("SetTextI18n")
     private void getSelectedDateData(String date, EditText scheduleEditText, TextView receivedValueTextView) {
         if (scheduleData.containsKey(date)) {
