@@ -71,7 +71,11 @@ public class CalendarActivity extends AppCompatActivity {
         });
 
         // 戻るボタンの処理
-        backButton.setOnClickListener(v -> finish());
+        backButton.setOnClickListener(v -> {
+            Intent intent = new Intent(CalendarActivity.this, MainActivity.class); // MainActivityに置き換え
+            startActivity(intent);
+            finish();
+        });
 
 //        // 削除ボタンの処理（追加）
 //        deleteButton.setOnClickListener(v -> {

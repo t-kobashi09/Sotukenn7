@@ -9,18 +9,20 @@
     <CalendarView
         android:id="@+id/calendarView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="293dp" />
 
     <!-- 選択した日付を表示するテキストビュー -->
     <TextView
         android:id="@+id/dateTextView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="118dp"
         android:padding="16dp"
         android:text="@string/calender_date"
         android:textSize="18sp" />
 
     <!-- スケジュール入力用 -->
+
+    <!-- 保存ボタン -->
     <EditText
         android:id="@+id/scheduleEditText"
         android:layout_width="match_parent"
@@ -31,11 +33,11 @@
         android:hint="@string/schedule_hint"
         android:inputType="textMultiLine" />
 
-    <!-- 保存ボタン -->
     <Button
         android:id="@+id/saveButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@drawable/rounded_button"
         android:text="@string/calender_save" />
 
     <!-- 戻るボタン -->
@@ -44,6 +46,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
+        android:background="@drawable/rounded_button"
         android:text="@string/calender_back" />
 
     <TextView
