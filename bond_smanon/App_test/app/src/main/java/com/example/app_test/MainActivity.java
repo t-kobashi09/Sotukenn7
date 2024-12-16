@@ -93,22 +93,9 @@ public class MainActivity extends AppCompatActivity {
         // 記録ボタンの設定
         Button recordButton = findViewById(R.id.button_record); // 記録ボタンを取得
         recordButton.setOnClickListener(v -> {
-            // 記録画面に遷移
-            Intent intent = new Intent(MainActivity.this, RecordActivity.class);
-            intent.putExtra("selected_date", getCurrentDate());
-            startActivity(intent); // RecordActivityに遷移
+            navigateToRecordActivity();
         });
 
-//    //タイマー機能
-//        // Chronometerの取得
-//        chronometer = findViewById(R.id.chron_text);
-//
-//        // Chronometerの初期設定
-//        chronometer.setText(formatElapsedTime(0)); // 初期値を「00:00:00」に設定
-//        chronometer.setOnChronometerTickListener(chronometer -> {
-//            long elapsedMillis = SystemClock.elapsedRealtime() - chronometer.getBase();
-//            chronometer.setText(formatElapsedTime(elapsedMillis)); // フォーマットした時間をセット
-//        });
 
     //マップボタンの設定
         // FusedLocationProviderClientのインスタンスを作成
@@ -227,104 +214,22 @@ public class MainActivity extends AppCompatActivity {
         return String.format("%02d:%02d:%02d", hours, minutes, seconds);
     }
 
-    // 日時取得
-//    @SuppressLint("SimpleDateFormat")
-//    private String getCurrentDate() {
-//        java.util.Calendar calendar = java.util.Calendar.getInstance();
-//        java.text.SimpleDateFormat dateFormat = new java.text.SimpleDateFormat("yyyy/MM/dd");
-//        return dateFormat.format(calendar.getTime());
-//    }
-
     //スタートボタン押下時
     public void onStart(View v) {
         // タイマー画面に遷移
         Intent intent = new Intent(MainActivity.this, TimerActivity.class);
         startActivity(intent); // TimerActivityに遷移
-//        if (!isChronometerRunning) {
-//            chronometer.setBase(SystemClock.elapsedRealtime() - elapsedTime);
-//            chronometer.start();
-//            isChronometerRunning = true;
-//        }
     }
 
-//    //ストップボタン押下時
-//    public void onStop(View v) {
-//        if (isChronometerRunning) {
-//            chronometer.stop();
-//            elapsedTime = SystemClock.elapsedRealtime() - chronometer.getBase();
-//            isChronometerRunning = false;
-//        }
-//        //インスタシェア質問/画面遷移ポップアップ表示
-//        showSharePopup();
-//    }
-//
-////インスタシェア可否質問/画面遷移ポップアップ表示
-//    private void showSharePopup() {
-//        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-//        builder.setTitle("シェアしますか？");
-//
-//        builder.setPositiveButton("シェア", (dialog, which) -> {
-//            openImagePicker();
-//        });
-//
-//        builder.setNegativeButton("キャンセル", (dialog, which) -> {
-//            navigateToRecordActivity();
-//        });
-//
-//        AlertDialog dialog = builder.create();
-//        dialog.show();
-//    }
-//
-//    //画像生成
-//    @SuppressLint("IntentReset")
-//    private void openImagePicker() {
-//        Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-//        intent.setType("image/*");
-//        startActivityForResult(intent, REQUEST_IMAGE_PICK);
-//    }
-//
-//    //画像選択
-//    @Override
-//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        super.onActivityResult(requestCode, resultCode, data);
-//
-//        if (requestCode == REQUEST_IMAGE_PICK && resultCode == RESULT_OK && data != null) {
-//            Uri selectedImageUri = data.getData();
-//            if (selectedImageUri != null) {
-//                shareImageToInstagram(selectedImageUri);
-//            } else {
-//                Toast.makeText(this, "画像を選択できませんでした", Toast.LENGTH_SHORT).show();
-//                navigateToRecordActivity();
-//            }
-//        } else {
-//            navigateToRecordActivity();
-//        }
-//    }
-//
-//    //インスタ遷移
-//    private void shareImageToInstagram(Uri imageUri) {
-//        Intent shareIntent = new Intent();
-//        shareIntent.setAction(Intent.ACTION_SEND);
-//        shareIntent.setType("image/*");
-//        shareIntent.putExtra(Intent.EXTRA_STREAM, imageUri);
-//        shareIntent.setPackage("com.instagram.android");
-//
-//        try {
-//            startActivityForResult(shareIntent, 123);
-//        } catch (ActivityNotFoundException e) {
-//            Toast.makeText(this, "Instagramがインストールされていません", Toast.LENGTH_SHORT).show();
-//            navigateToRecordActivity();
-//        }
-//    }
-//
-//    //画面遷移
-//    private void navigateToRecordActivity() {
-//        Intent intent = new Intent(this, CalendarActivity.class);
-//        intent.putExtra("elapsed_time", elapsedTime);
-//        intent.putExtra("selected_date", getCurrentDate());
-//        startActivity(intent);
-//        finish();
-//    }
+
+    //画面遷移
+    private void navigateToRecordActivity() {
+        Intent intent = new Intent(this, CalendarActivity.class);
+        intent.putExtra("elapsed_time", elapsedTime);
+        intent.putExtra("selected_date", getCurrentDate());
+        startActivity(intent);
+        finish();
+    }
 
     // メモ表示用ダイアログ
     private void showMemoDialog() {

@@ -1,27 +1,27 @@
 <resources>
     <string name="app_name">スマのん_テスト</string>
     <!-- ボタン表記 -->
-    <string name="home">ホーム</string>
-    <string name="camera">カメラ</string>
-    <string name="memo">メモ</string>
-    <string name="map">マップ</string>
-    <string name="record">記録</string>
+    <string name="home">Home</string>
+    <string name="camera">Camera</string>
+    <string name="spot">Spot</string>
+    <string name="memo">Memo</string>
+    <string name="map">Map</string>
+    <string name="record">reco</string>
+    <string name="document">Document</string>
+    <string name="detox">DetoxRecord</string>
     <string name="share_button">Instagramにシェア</string>
     <!-- タイマー関係 -->
     <string name="clock">00:00:00</string>
     <string name="start">スタート</string>
     <string name="stop">ストップ</string>
-    <string name="keisoku">計測時間</string>
+    <string name="end">End</string>
+    <string name="keisoku">本日のスマのん時間</string>
     <!-- カレンダー関係 -->
     <string name="calender_open">Open Calendar</string>
-    <string name="calender_date">Selected Date:</string>
-    <string name="calender_save">Save Schedule</string>
-    <string name="calender_back">Back to Main</string>
-    <string name="schedule_hint">Enter your schedule here</string>
+    <string name="calender_date">Date:</string>
+    <string name="calender_save">Save</string>
+    <string name="calender_back">Back</string>
+    <string name="schedule_hint">Memo</string>
     <!-- MAP関係 -->
-    <string name="bt_map_search">地図検索</string>
-    <string name="tv_current_title">現在地</string>
-    <string name="tv_latitude_title">緯度：</string>
-    <string name="tv_longitude_title">経度：</string>
     <string name="bt_map_current">地図表示</string>
 </resources>

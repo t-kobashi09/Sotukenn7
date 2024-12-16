@@ -9,7 +9,7 @@
     <CalendarView
         android:id="@+id/calendarView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="293dp" />
 
     <!-- 選択した日付を表示するテキストビュー -->
     <TextView
@@ -21,37 +21,43 @@
         android:textSize="18sp" />
 
     <!-- スケジュール入力用 -->
-    <EditText
-        android:id="@+id/scheduleEditText"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:autofillHints=""
-        android:gravity="top"
-        android:hint="@string/schedule_hint"
-        android:inputType="textMultiLine" />
-
-    <!-- 保存ボタン -->
-    <Button
-        android:id="@+id/saveButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/calender_save" />
-
-    <!-- 戻るボタン -->
-    <Button
-        android:id="@+id/backButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="@string/calender_back" />
-
     <TextView
         android:id="@+id/received_value"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="48dp"
+        android:gravity="center"
         android:text="値がここに表示されます"
-        android:textSize="18sp"
         android:textColor="#000000"
-        android:gravity="center" />
+        android:textSize="18sp" />
+
+    <!-- 保存ボタン -->
+
+    <!-- 戻るボタン -->
+
+    <EditText
+        android:id="@+id/scheduleEditText"
+        android:layout_width="match_parent"
+        android:layout_height="147dp"
+        android:layout_weight="1"
+        android:autofillHints=""
+        android:gravity="top"
+        android:hint="Memo"
+        android:inputType="textMultiLine" />
+
+    <Button
+        android:id="@+id/saveButton"
+        android:layout_width="168dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/rounded_button"
+        android:text="Save" />
+
+    <Button
+        android:id="@+id/backButton"
+        android:layout_width="172dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/rounded_button"
+        android:text="Back" />
+
+
 </LinearLayout>
