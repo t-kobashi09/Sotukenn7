@@ -17,6 +17,9 @@ import android.widget.Button;
 import android.os.Looper;
 import android.view.View;
 import android.widget.Chronometer;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -30,6 +33,7 @@ import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.location.Priority;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import androidx.annotation.NonNull;
 
@@ -83,6 +87,21 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        //ヘルプボタン処理
+        // LinearLayout と FloatingActionButton の参照を取得
+        LinearLayout linearLayout = findViewById(R.id.linearLayout);
+        FloatingActionButton floatingActionButton = findViewById(R.id.floatingActionButton);
+        // FloatingActionButton のクリックイベントを設定
+        floatingActionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // コンテンツを動的に追加
+                addContent(linearLayout);
+                // LinearLayout を表示
+                linearLayout.setVisibility(View.VISIBLE);
+            }
+        });
+
     //メモボタンの設定
         Button memoButton = findViewById(R.id.button_memo);
         memoButton.setOnClickListener(v -> {
@@ -108,6 +127,44 @@ public class MainActivity extends AppCompatActivity {
         //位置情報変更時処理、コールバックオブジェクト生成
         _onUpdateLocation = new OnUpdateLocation();
 
+    }
+    private void addContent(LinearLayout linearLayout) {
+        // サンプル画像とテキストを追加（交互に）
+        int[] imageResources = {
+                R.drawable.milk_1, // 最初の画像リソース
+                R.drawable.milk_2, // 2番目の画像リソース
+                R.drawable.milk_3  // 3番目の画像リソース
+        };
+
+        String[] texts = {
+                "これは1枚目の画像の説明文です。",
+                "これは2枚目の画像の説明文です。",
+                "これは3枚目の画像の説明文です。"
+        };
+
+        // リソースをもとに要素を追加
+        for (int i = 0; i < imageResources.length; i++) {
+            // 画像の追加
+            ImageView imageView = new ImageView(this);
+            imageView.setLayoutParams(new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.MATCH_PARENT,
+                    400 // 高さを固定（必要に応じて調整）
+            ));
+            imageView.setImageResource(imageResources[i]);
+            imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+            linearLayout.addView(imageView);
+
+            // テキストの追加
+            TextView textView = new TextView(this);
+            textView.setLayoutParams(new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.MATCH_PARENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT
+            ));
+            textView.setText(texts[i]);
+            textView.setTextSize(16);
+            textView.setPadding(0, 16, 0, 16); // 上下にスペースを追加
+            linearLayout.addView(textView);
+        }
     }
 
 
