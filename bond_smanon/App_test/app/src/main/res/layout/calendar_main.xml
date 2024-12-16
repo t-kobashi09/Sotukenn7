@@ -15,46 +15,49 @@
     <TextView
         android:id="@+id/dateTextView"
         android:layout_width="match_parent"
-        android:layout_height="118dp"
+        android:layout_height="wrap_content"
         android:padding="16dp"
         android:text="@string/calender_date"
         android:textSize="18sp" />
 
     <!-- スケジュール入力用 -->
+    <TextView
+        android:id="@+id/received_value"
+        android:layout_width="wrap_content"
+        android:layout_height="48dp"
+        android:gravity="center"
+        android:text="値がここに表示されます"
+        android:textColor="#000000"
+        android:textSize="18sp" />
 
     <!-- 保存ボタン -->
+
+    <!-- 戻るボタン -->
+
     <EditText
         android:id="@+id/scheduleEditText"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="147dp"
         android:layout_weight="1"
         android:autofillHints=""
         android:gravity="top"
-        android:hint="@string/schedule_hint"
+        android:hint="Memo"
         android:inputType="textMultiLine" />
 
     <Button
         android:id="@+id/saveButton"
-        android:layout_width="match_parent"
+        android:layout_width="168dp"
         android:layout_height="wrap_content"
         android:background="@drawable/rounded_button"
-        android:text="@string/calender_save" />
+        android:text="Save" />
 
-    <!-- 戻るボタン -->
     <Button
         android:id="@+id/backButton"
-        android:layout_width="match_parent"
+        android:layout_width="172dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:background="@drawable/rounded_button"
-        android:text="@string/calender_back" />
+        android:text="Back" />
 
-    <TextView
-        android:id="@+id/received_value"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="値がここに表示されます"
-        android:textSize="18sp"
-        android:textColor="#000000"
-        android:gravity="center" />
+
 </LinearLayout>

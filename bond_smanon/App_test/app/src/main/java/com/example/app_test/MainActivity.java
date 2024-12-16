@@ -90,6 +90,15 @@ public class MainActivity extends AppCompatActivity {
             showMemoDialog();
         });
 
+        // 記録ボタンの設定
+        Button recordButton = findViewById(R.id.button_record); // 記録ボタンを取得
+        recordButton.setOnClickListener(v -> {
+            // 記録画面に遷移
+            Intent intent = new Intent(MainActivity.this, RecordActivity.class);
+            intent.putExtra("selected_date", getCurrentDate());
+            startActivity(intent); // RecordActivityに遷移
+        });
+
 //    //タイマー機能
 //        // Chronometerの取得
 //        chronometer = findViewById(R.id.chron_text);
@@ -113,6 +122,7 @@ public class MainActivity extends AppCompatActivity {
         _onUpdateLocation = new OnUpdateLocation();
 
     }
+
 
     //権限確認
     @Override
@@ -140,6 +150,14 @@ public class MainActivity extends AppCompatActivity {
             }
 
         }
+    }
+
+    // 日時取得
+    @SuppressLint("SimpleDateFormat")
+    private String getCurrentDate() {
+        java.util.Calendar calendar = java.util.Calendar.getInstance();
+        java.text.SimpleDateFormat dateFormat = new java.text.SimpleDateFormat("yyyy/MM/dd");
+        return dateFormat.format(calendar.getTime());
     }
 
     //カメラ関連
@@ -210,12 +228,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     // 日時取得
-    @SuppressLint("SimpleDateFormat")
-    private String getCurrentDate() {
-        java.util.Calendar calendar = java.util.Calendar.getInstance();
-        java.text.SimpleDateFormat dateFormat = new java.text.SimpleDateFormat("yyyy/MM/dd");
-        return dateFormat.format(calendar.getTime());
-    }
+//    @SuppressLint("SimpleDateFormat")
+//    private String getCurrentDate() {
+//        java.util.Calendar calendar = java.util.Calendar.getInstance();
+//        java.text.SimpleDateFormat dateFormat = new java.text.SimpleDateFormat("yyyy/MM/dd");
+//        return dateFormat.format(calendar.getTime());
+//    }
 
     //スタートボタン押下時
     public void onStart(View v) {

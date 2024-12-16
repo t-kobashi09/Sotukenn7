@@ -97,7 +97,6 @@ public class TimerActivity extends AppCompatActivity {
         chronometer.start();
         isChronometerRunning = true;
 
-
         // Chronometerの初期設定
         chronometer.setText(formatElapsedTime(0)); // 初期値を「00:00:00」に設定
         chronometer.setOnChronometerTickListener(chronometer -> {

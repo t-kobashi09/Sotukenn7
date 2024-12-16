@@ -15,13 +15,13 @@
     <string name="start">スタート</string>
     <string name="stop">ストップ</string>
     <string name="end">End</string>
-    <string name="keisoku">計測時間</string>
+    <string name="keisoku">本日のスマのん時間</string>
     <!-- カレンダー関係 -->
     <string name="calender_open">Open Calendar</string>
-    <string name="calender_date">Selected Date:</string>
-    <string name="calender_save">Save Schedule</string>
-    <string name="calender_back">Back to Main</string>
-    <string name="schedule_hint">Enter your schedule here</string>
+    <string name="calender_date">Date:</string>
+    <string name="calender_save">Save</string>
+    <string name="calender_back">Back</string>
+    <string name="schedule_hint">Memo</string>
     <!-- MAP関係 -->
     <string name="bt_map_current">地図表示</string>
 </resources>

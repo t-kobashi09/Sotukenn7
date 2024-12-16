@@ -30,58 +30,14 @@
     <!-- ここまで -->
 
     <!-- ストップボタン -->
-    <Button
-        android:id="@+id/button_end"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="70dp"
-        android:background="@drawable/rounded_button"
-        android:elevation="0dp"
-        android:onClick="onStop"
-        android:stateListAnimator="@null"
-        android:text="@string/end"
-        android:textColor="#000000"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
     <!-- ここまで -->
 
     <!-- メモボタン -->
 
-    <Button
-        android:id="@+id/button_memo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/rounded_button"
-        android:text="@string/memo"
-        android:textColor="#000000"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:backgroundTint="@null"
-        android:layout_marginStart="20dp"/>
     <!-- ここまで -->
 
 
     <!-- マップボタン -->
-    <Button
-        android:id="@+id/button_map"
-        android:onClick="onMapShowCurrentButtonClick"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/map"
-        app:layout_constraintTop_toTopOf="parent"
-        android:textColor="#000000"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintVertical_bias="1"
-        app:layout_constraintHorizontal_bias="0.5"
-        android:layout_marginBottom="70dp"
-        android:background="@drawable/rounded_button"
-        app:backgroundTint="@null"/>
     <!-- ここまで -->
 
 
@@ -100,6 +56,55 @@
 
 
     <!-- デトックスなうテキスト -->
+
+    <Button
+        android:id="@+id/button_end"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="68dp"
+        android:elevation="0dp"
+        android:onClick="onStop"
+        android:stateListAnimator="@null"
+        android:text="@string/end"
+        android:textColor="#000000"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.907"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/button_memo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginBottom="68dp"
+        android:background="@drawable/rounded_button"
+        android:text="@string/memo"
+        android:textColor="#000000"
+        android:textSize="20sp"
+        app:backgroundTint="@null"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent" />
+
+    <Button
+        android:id="@+id/button_map"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="70dp"
+        android:background="@drawable/rounded_button"
+        android:onClick="onMapShowCurrentButtonClick"
+        android:text="@string/map"
+        android:textColor="#000000"
+        android:textSize="20sp"
+        app:backgroundTint="@null"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
+
     <TextView
         android:id="@+id/text_detox_now"
         android:layout_width="wrap_content"
@@ -154,6 +159,9 @@
     <!-- ここまで -->
 
     <!-- カウンター -->
+    <!-- ここまで -->
+
+    <!-- カメラボタン -->
     <Chronometer
         android:id="@+id/chron_text"
         android:layout_width="wrap_content"
@@ -164,10 +172,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.9" />
-    <!-- ここまで -->
+        app:layout_constraintVertical_bias="0.807" />
 
-    <!-- カメラボタン -->
     <Button
         android:id="@+id/button_camera"
         android:layout_width="wrap_content"
