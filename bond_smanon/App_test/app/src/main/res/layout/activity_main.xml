@@ -9,28 +9,37 @@
 
     <!-- おすすめスポットボタン -->
     <!-- 公式インスタに遷移 -->
-    <!-- ここまで -->
-
-    <!-- スタートボタン -->
-
-    <Button
-        android:id="@+id/button_spot"
+    <TextView
+        android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="20dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="156dp"
-        android:background="@drawable/rounded_button"
-        android:paddingStart="20dp"
-        android:paddingTop="10dp"
-        android:paddingEnd="20dp"
-        android:paddingBottom="10dp"
-        android:text="@string/spot"
-        android:textColor="#000000"
-        android:textSize="20sp"
-        app:backgroundTint="@null"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:text="市役所用プレゼン資料"
+        android:padding="16dp"
+        android:textColor="@android:color/holo_blue_dark"
+        android:textStyle="bold"
+        android:clickable="true"
+        android:focusable="true"
+        app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+<!--    <Button-->
+<!--        android:id="@+id/button_spot"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_margin="20dp"-->
+<!--        android:layout_marginTop="20dp"-->
+<!--        android:layout_marginEnd="156dp"-->
+<!--        android:background="@drawable/rounded_button"-->
+<!--        android:paddingStart="20dp"-->
+<!--        android:paddingTop="10dp"-->
+<!--        android:paddingEnd="20dp"-->
+<!--        android:paddingBottom="10dp"-->
+<!--        android:text="@string/spot"-->
+<!--        android:textColor="#000000"-->
+<!--        android:textSize="20sp"-->
+<!--        app:backgroundTint="@null"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent" />-->
+    <!-- ここまで -->
 
     <!-- スタートボタン -->
     <Button
@@ -71,8 +80,14 @@
         app:backgroundTint="@null"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent" />
-    <!-- ここまで -->
 
+        <EditText
+        android:id="@+id/editTextMemo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="ここにメモを書いてください"
+        android:inputType="text" />
+    <!-- ここまで -->
 
     <!-- マップボタン -->
     <Button
@@ -189,17 +204,19 @@
     <!-- TextView (初期状態は非表示) -->
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="-16dp">
+
         <LinearLayout
             android:id="@+id/linearLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
+            android:background="#CCFFFFFF"
             android:orientation="vertical"
             android:padding="16dp"
-            android:background="#AEFFFFFF"
-            android:visibility="gone">
-        </LinearLayout>
+            android:visibility="gone"></LinearLayout>
     </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

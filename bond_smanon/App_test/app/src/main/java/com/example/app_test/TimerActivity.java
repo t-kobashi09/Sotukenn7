@@ -220,14 +220,6 @@ public class TimerActivity extends AppCompatActivity {
         return dateFormat.format(calendar.getTime());
     }
 
-    //スタートボタン押下時
-    public void onStart(View v) {
-        if (!isChronometerRunning) {
-            chronometer.setBase(SystemClock.elapsedRealtime() - elapsedTime);
-            chronometer.start();
-            isChronometerRunning = true;
-        }
-    }
 
     //ストップボタン押下時
     public void onStop(View v) {

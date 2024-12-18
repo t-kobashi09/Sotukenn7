@@ -5,6 +5,7 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import com.google.android.gms.location.LocationRequest;
@@ -17,6 +18,7 @@ import android.widget.Button;
 import android.os.Looper;
 import android.view.View;
 import android.widget.Chronometer;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -79,6 +81,19 @@ public class MainActivity extends AppCompatActivity {
             getSupportActionBar().hide();
         }
 
+        //公式インスタ遷移
+        // TextViewを取得
+        TextView textView = findViewById(R.id.textView);
+
+        // クリックイベントを設定
+        textView.setOnClickListener(v -> {
+            // 外部ブラウザでURLを開く
+            String url = "https://www.instagram.com/s/aGlnaGxpZ2h0OjE4MDUzNzI4OTI0NzYzNzM1?story_media_id=3503694777097793936&igsh=MTNkamxwb2FrcWx4eQ==";
+//            String url = "https://www.canva.com/design/DAGYeq50wO8/jtEXSJ7QwkHZmjdOOcR-sg/view?utm_content=DAGYeq50wO8&utm_campaign=designshare&utm_medium=link&utm_source=editor";
+            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+            startActivity(intent);
+        });
+
         // カメラ起動ボタン
         Button btnCapture = findViewById(R.id.button_camera);
         btnCapture.setOnClickListener(v -> {
@@ -95,10 +110,20 @@ public class MainActivity extends AppCompatActivity {
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // コンテンツを動的に追加
-                addContent(linearLayout);
-                // LinearLayout を表示
-                linearLayout.setVisibility(View.VISIBLE);
+                // 表示・非表示を切り替え
+                if (linearLayout.getVisibility() == View.VISIBLE) {
+                    // 現在表示されている場合は非表示にする
+                    linearLayout.setVisibility(View.GONE);
+                } else {
+                    // 現在非表示の場合は表示する
+                    if (linearLayout.getChildCount() == 0) {
+                        // コンテンツがまだ追加されていない場合のみ追加
+                        addContent(linearLayout);
+                    }
+                    linearLayout.setVisibility(View.VISIBLE);
+                    linearLayout.bringToFront(); // 最前面に移動
+                    linearLayout.invalidate();  // レイアウトを再描画
+                }
             }
         });
 
@@ -131,15 +156,15 @@ public class MainActivity extends AppCompatActivity {
     private void addContent(LinearLayout linearLayout) {
         // サンプル画像とテキストを追加（交互に）
         int[] imageResources = {
-                R.drawable.milk_1, // 最初の画像リソース
-                R.drawable.milk_2, // 2番目の画像リソース
-                R.drawable.milk_3  // 3番目の画像リソース
+                R.drawable.instruct_1, // ホーム画面説明
+                R.drawable.instruct_2, // タイマー画面説明
+                R.drawable.instruct_3  // 記録画面説明
         };
 
         String[] texts = {
-                "これは1枚目の画像の説明文です。",
-                "これは2枚目の画像の説明文です。",
-                "これは3枚目の画像の説明文です。"
+                "スタートボタンを押してスマのん時間を始めてみましょう！",
+                "タイマーであなたのスマのん時間が計測されます。スマのん時間が終わったらENDボタンを押してInstagramで共有してみましょう！",
+                "今日のスマのん時間がカレンダーと一緒に閲覧できます。"
         };
 
         // リソースをもとに要素を追加
@@ -274,7 +299,7 @@ public class MainActivity extends AppCompatActivity {
     //スタートボタン押下時
     public void onStart(View v) {
         // タイマー画面に遷移
-        Intent intent = new Intent(MainActivity.this, TimerActivity.class);
+        Intent intent = new Intent(this, TimerActivity.class);
         startActivity(intent); // TimerActivityに遷移
     }
 
@@ -290,18 +315,37 @@ public class MainActivity extends AppCompatActivity {
 
     // メモ表示用ダイアログ
     private void showMemoDialog() {
-        // メモの内容をここで設定
-        String memoContent = "ここにメモの内容が表示されます。";
+        // メモの内容を表示する EditText を作成
+        EditText memoEditText = new EditText(this);
+        memoEditText.setText(getSavedMemo());  // 既存のメモがあれば表示
 
         // ダイアログを作成
         new AlertDialog.Builder(this)
                 .setTitle("メモ")
-                .setMessage(memoContent) // メモの内容を設定
-                .setPositiveButton("OK", (dialog, which) -> {
-                    // OKボタンが押された場合の処理（閉じるだけ）
+                .setView(memoEditText)  // EditTextをダイアログに追加
+                .setPositiveButton("保存", (dialog, which) -> {
+                    // 保存ボタンが押された場合の処理
+                    saveMemo(memoEditText.getText().toString()); // 入力内容を保存
+                })
+                .setNegativeButton("キャンセル", (dialog, which) -> {
+                    // キャンセルボタンが押された場合の処理（何もしない）
                 })
                 .create()
                 .show(); // ダイアログを表示
+    }
+
+    // メモの保存
+    private void saveMemo(String memo) {
+        SharedPreferences sharedPreferences = getSharedPreferences("memo_pref", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("memo", memo);  // メモを保存
+        editor.apply();  // 保存を確定
+    }
+
+    // 保存されたメモを取得
+    private String getSavedMemo() {
+        SharedPreferences sharedPreferences = getSharedPreferences("memo_pref", MODE_PRIVATE);
+        return sharedPreferences.getString("memo", "");  // 保存されたメモを取得、なければ空文字
     }
 
 
@@ -315,7 +359,6 @@ public class MainActivity extends AppCompatActivity {
         //アクティビティを起動
         startActivity(intent);
     }
-
 
     //現在地取得
     private class OnUpdateLocation extends LocationCallback{
@@ -333,11 +376,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         }
-
-
-
     }
-
 
 
 }
