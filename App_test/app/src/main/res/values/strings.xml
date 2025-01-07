@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">スマのん_テスト</string>
+    <string name="app_name">スマのん</string>
     <!-- ボタン表記 -->
     <string name="home">Home</string>
     <string name="camera">Camera</string>

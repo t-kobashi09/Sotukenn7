@@ -220,14 +220,6 @@ public class TimerActivity extends AppCompatActivity {
         return dateFormat.format(calendar.getTime());
     }
 
-    //スタートボタン押下時
-    public void onStart(View v) {
-        if (!isChronometerRunning) {
-            chronometer.setBase(SystemClock.elapsedRealtime() - elapsedTime);
-            chronometer.start();
-            isChronometerRunning = true;
-        }
-    }
 
     //ストップボタン押下時
     public void onStop(View v) {
@@ -299,7 +291,7 @@ public class TimerActivity extends AppCompatActivity {
         }
     }
 
-    //画面遷移
+    //記録画面遷移
     private void navigateToRecordActivity() {
         Intent intent = new Intent(this, CalendarActivity.class);
         intent.putExtra("elapsed_time", elapsedTime);

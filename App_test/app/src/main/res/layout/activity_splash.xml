@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/gradient_background">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#FFFFFF"
+        android:gravity="center">
+    <!-- ロゴ画像 -->
+
+        <!-- ローディングテキスト -->
+    <!--    <TextView-->
+    <!--        android:id="@+id/loading_text"-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_below="@id/logo"-->
+    <!--        android:layout_marginTop="16dp"-->
+    <!--        android:text="Loading..."-->
+    <!--        android:textSize="18sp"-->
+    <!--        android:textColor="#000000" />-->
+        <ImageView
+            android:id="@+id/logo"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:src="@drawable/icon" />
+
+        <TextView
+            android:id="@+id/loading_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Loading..."
+            android:textColor="#000000"
+            android:textSize="18sp" />
+
+        <!-- プログレスバー -->
+<!--    <ProgressBar-->
+<!--        android:id="@+id/progress_bar"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_below="@id/loading_text"-->
+<!--        android:layout_marginTop="16dp" />-->
+</RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

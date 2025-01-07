@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/gradient_background"
+    tools:context=".HelpViewActivity">
+
+ <!-- スクロールビュー -->
+    <ScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <!-- スクロール可能なコンテンツ -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+            <!-- 文章と画像 -->
+
+            <!-- ホーム画面説明 -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="スタートボタンを押すとスマのん時間が始まります"
+                android:textColor="#FFFFFF"
+                android:textSize="16sp"
+                android:paddingBottom="16dp" />
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scaleType="fitCenter"
+                android:adjustViewBounds="true"
+                android:src="@drawable/instruct_1"
+                android:contentDescription="Sample Image"
+                android:paddingBottom="16dp" />
+
+            <!-- タイマー画面説明 -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="タイマーであなたのスマのん時間が計測されます。スマのん時間が終わったらENDボタンを押してInstagramで共有してみましょう！"
+                android:textColor="#FFFFFF"
+                android:textSize="16sp"
+                android:paddingBottom="16dp" />
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scaleType="fitCenter"
+                android:adjustViewBounds="true"
+                android:src="@drawable/instruct_2"
+                android:contentDescription="Sample Image"
+                android:paddingBottom="16dp" />
+
+            <!-- 記録画面説明 -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="今日のスマのん時間がカレンダーと一緒に閲覧できます。"
+                android:textColor="#FFFFFF"
+                android:textSize="16sp"
+                android:paddingBottom="16dp" />
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scaleType="fitCenter"
+                android:adjustViewBounds="true"
+                android:src="@drawable/instruct_3"
+                android:contentDescription="Sample Image"
+                android:paddingBottom="16dp" />
+
+        </LinearLayout>
+    </ScrollView>
+
+    <!-- 画面最上部移動ボタン -->
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/to_top"
+        android:contentDescription="Scroll to Top"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        app:srcCompat="@android:drawable/arrow_up_float"
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="793dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_margin="16dp"/>
+
+    <!-- 固定ヘッダー -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#F5124BFB"
+        android:padding="8dp"
+        app:layout_constraintTop_toTopOf="parent">
+
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/button_home"
+            android:contentDescription="ホームボタンです"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            app:srcCompat="@drawable/ic_home_black_24dp"
+            tools:layout_editor_absoluteX="320dp"
+            tools:layout_editor_absoluteY="15dp"
+            tools:ignore="MissingConstraints" />
+
+        <TextView
+            android:id="@+id/header_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#F5124BFB"
+            android:gravity="center"
+            android:padding="16dp"
+            android:text="つかいかた"
+            android:textColor="#FFFFFF"
+            android:textSize="18sp"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

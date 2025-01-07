@@ -8,92 +8,182 @@
     android:background="@drawable/gradient_background"
     tools:context=".MainActivity">
 
+
     <!-- おすすめスポットボタン -->
-    <!-- 公式インスタに遷移 -->
-    <Button
-        android:id="@+id/button_spot"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingStart="20dp"
-        android:paddingEnd="20dp"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp"
-        android:textColor="#000000"
-        android:textSize="20sp"
-        android:text="@string/spot"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:background="@drawable/rounded_button"
-        app:backgroundTint="@null"
-        android:layout_marginEnd="20dp"
-        android:layout_margin="20dp"/>
+
     <!-- ここまで -->
+    <!-- 公式インスタに遷移 -->
+<!--    <TextView-->
+<!--        android:id="@+id/spotView"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:clickable="true"-->
+<!--        android:focusable="true"-->
+<!--        android:padding="16dp"-->
+<!--        android:text="市役所用プレゼン資料"-->
+<!--        android:textColor="@android:color/holo_blue_dark"-->
+<!--        android:textStyle="bold"-->
+<!--        android:visibility="invisible"-->
+<!--        app:layout_constraintLeft_toLeftOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent" />-->
+
 
     <!-- スタートボタン -->
     <Button
         android:id="@+id/button_start"
-        android:onClick="onStart"
         android:layout_width="200dp"
         android:layout_height="0dp"
+        android:background="@drawable/rounded_button"
+        android:elevation="0dp"
+        android:stateListAnimator="@null"
         android:text="Start"
         android:textColor="@android:color/black"
         android:textSize="36sp"
-        android:elevation="0dp"
-        android:stateListAnimator="@null"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:backgroundTint="@null"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintVertical_bias="0.3"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHeight_default="wrap"
-        android:background="@drawable/rounded_button"
-        app:backgroundTint="@null" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.3" />
     <!-- ここまで -->
 
+    <!-- 検索機能 -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="65dp"
+        android:padding="16dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!-- 検索ボタン -->
+
+            <!-- 検索バー -->
+
+            <Button
+                android:id="@+id/btnSearch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rounded_button"
+                android:layout_gravity="end"
+                android:text="検索" />
+
+            <LinearLayout
+                android:id="@+id/llSearchBar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:visibility="gone"
+                android:layout_marginTop="16dp">
+
+                <EditText
+                    android:id="@+id/etSearch"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:hint="検索キーワードを入力"
+                    android:padding="8dp"
+                    android:background="#FFFFFF"
+                    android:layout_marginEnd="8dp" />
+
+                <Button
+                    android:id="@+id/btnExecuteSearch"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/rounded_button"
+                    android:text="検索"
+                    android:layout_marginEnd="8dp" />
+
+                <Button
+                    android:id="@+id/btnCloseSearch"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/rounded_button"
+                    android:text="閉じる" />
+            </LinearLayout>
+
+            <!-- 検索結果 -->
+            <TextView
+                android:id="@+id/tvResults"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:layout_marginTop="16dp"
+                android:padding="16dp"
+                android:background="#EFEFEF"
+                android:textSize="14sp"
+                android:visibility="gone" />
+
+            <!-- 検索回数 -->
+            <TextView
+                android:id="@+id/tvSearchCount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="検索可能回数: 10"
+                android:textSize="16sp"
+                android:visibility="gone" />
+
+        </LinearLayout>
+
+    </ScrollView>
+
+    <!-- ここまで -->
 
     <!-- メモボタン -->
     <Button
         android:id="@+id/button_memo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="70dp"
+        android:background="@drawable/rounded_button"
         android:paddingStart="20dp"
-        android:paddingEnd="20dp"
         android:paddingTop="10dp"
+        android:paddingEnd="20dp"
         android:paddingBottom="10dp"
         android:text="@string/memo"
         android:textColor="#000000"
         android:textSize="20sp"
-        app:layout_constraintLeft_toLeftOf="parent"
+        app:backgroundTint="@null"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginBottom="70dp"
-        android:layout_marginStart="20dp"
-        android:background="@drawable/rounded_button"
-        app:backgroundTint="@null" />
-    <!-- ここまで -->
+        app:layout_constraintLeft_toLeftOf="parent" />
 
+    <!--    <EditText-->
+    <!--        android:id="@+id/editTextMemo"-->
+    <!--        android:layout_width="0dp"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:hint="ここにメモを書いてください"-->
+    <!--        android:inputType="text"-->
+    <!--        app:layout_constraintEnd_toEndOf="parent"-->
+    <!--        app:layout_constraintStart_toStartOf="parent"-->
+    <!--        app:layout_constraintTop_toTopOf="@+id/scrollView2" />-->
+    <!-- ここまで -->
 
     <!-- マップボタン -->
     <Button
         android:id="@+id/button_map"
-        android:onClick="onMapShowCurrentButtonClick"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingStart="20dp"
-        android:paddingEnd="20dp"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp"
-        android:text="@string/map"
-        app:layout_constraintTop_toTopOf="parent"
-        android:textColor="#000000"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintVertical_bias="1"
-        app:layout_constraintHorizontal_bias="0.5"
         android:layout_marginBottom="70dp"
         android:background="@drawable/rounded_button"
-        app:backgroundTint="@null" />
+        android:onClick="onMapShowCurrentButtonClick"
+        android:paddingStart="20dp"
+        android:paddingTop="10dp"
+        android:paddingEnd="20dp"
+        android:paddingBottom="10dp"
+        android:text="@string/map"
+        android:textColor="#000000"
+        android:textSize="20sp"
+        app:backgroundTint="@null"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1" />
     <!-- ここまで -->
 
 
@@ -102,35 +192,35 @@
         android:id="@+id/button_record"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="70dp"
+        android:background="@drawable/rounded_button"
         android:paddingStart="20dp"
-        android:paddingEnd="20dp"
         android:paddingTop="10dp"
+        android:paddingEnd="20dp"
         android:paddingBottom="10dp"
+        android:text="@string/record"
         android:textColor="#000000"
         android:textSize="20sp"
-        android:text="@string/record"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:backgroundTint="@null"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginBottom="70dp"
-        android:layout_marginEnd="20dp"
-        android:background="@drawable/rounded_button"
-        app:backgroundTint="@null" />
+        app:layout_constraintEnd_toEndOf="parent" />
     <!-- ここまで -->
 
 
     <!-- MOMENTテキスト -->
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/memoView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="MOMENT"
         android:textColor="#FFFFFF"
         android:textSize="50sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.45" />
     <!-- ここまで -->
 
@@ -151,25 +241,39 @@
         app:layout_constraintVertical_bias="0.55" />
     <!-- ここまで -->
 
+    <!-- ヘルプボタン -->
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/help_Button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="152dp"
+        android:layout_marginTop="16dp"
+        android:clickable="true"
+        android:contentDescription="ヘルプボタンです"
+        app:layout_constraintStart_toEndOf="@+id/button_camera"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@android:drawable/ic_menu_help" />
+
     <!-- カメラボタン -->
     <Button
         android:id="@+id/button_camera"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:layout_marginStart="20dp"
+        android:background="@drawable/rounded_button"
         android:paddingStart="20dp"
-        android:paddingEnd="20dp"
         android:paddingTop="10dp"
+        android:paddingEnd="20dp"
         android:paddingBottom="10dp"
+        android:text="camera"
+        android:contentDescription="カメラボタンです"
         android:textColor="#000000"
         android:textSize="20sp"
-        android:text="@string/camera"
-        android:background="@drawable/rounded_button"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginStart="20dp"
         app:backgroundTint="@null"
-        android:layout_margin="20dp"/>
-    <!-- ここまで -->
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
+    <!-- ここまで -->
 
 </androidx.constraintlayout.widget.ConstraintLayout>
