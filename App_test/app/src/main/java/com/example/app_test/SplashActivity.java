@@ -14,6 +14,11 @@ public class SplashActivity  extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 
+        // アクションバーを非表示にする
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().hide();
+        }
+
 // ロゴにフェードインアニメーションを適用
 //        ImageView logo = findViewById(R.id.logo);
         Animation fadeIn = new AlphaAnimation(0, 1);

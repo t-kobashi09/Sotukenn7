@@ -14,6 +14,11 @@ public class RecordActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_record);
 
+        // アクションバーを非表示にする
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().hide();
+        }
+
         // Intentから値を取得
         Intent intent = getIntent();
         long elapsedTime = intent.getLongExtra("elapsed_time", 0);

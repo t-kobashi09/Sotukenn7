@@ -29,6 +29,11 @@ public class CalendarActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.calendar_main);
 
+        // アクションバーを非表示にする
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().hide();
+        }
+
         // UI要素の取得
         CalendarView calendarView = findViewById(R.id.calendarView);
         TextView dateTextView = findViewById(R.id.dateTextView);

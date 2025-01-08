@@ -122,9 +122,6 @@ public class MainActivity extends AppCompatActivity {
         btnCloseSearch.setOnClickListener(v -> hideSearchBar()); // 検索バーを隠す
         btnSearch.setOnLongClickListener(v -> showSearchCount()); // 検索回数の長押し表示
 
-
-
-
         // アクションバーを非表示にする
         if (getSupportActionBar() != null) {
             getSupportActionBar().hide();
