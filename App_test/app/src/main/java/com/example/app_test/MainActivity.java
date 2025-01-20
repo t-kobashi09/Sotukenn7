@@ -4,6 +4,7 @@ import android.Manifest;
 
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
 import android.widget.Button;
@@ -471,6 +472,8 @@ public class MainActivity extends AppCompatActivity {
         List<String> synonyms = new ArrayList<>();
 
         if (query.equals("食事")) {
+            synonyms.add("ごはん");
+            synonyms.add("ご飯");
             synonyms.add("グルメ");
             synonyms.add("料理");
             synonyms.add("食べ物");
@@ -480,6 +483,7 @@ public class MainActivity extends AppCompatActivity {
             synonyms.add("食事処");
             synonyms.add("飲食");
             synonyms.add("食堂");
+            synonyms.add("カフェ");
             synonyms.add("和食");
             synonyms.add("レストラン");
         }
@@ -584,6 +588,7 @@ public class MainActivity extends AppCompatActivity {
         llSearchBar.startAnimation(slideIn);
         llSearchBar.setVisibility(View.VISIBLE); // 検索バーを表示
         btnSearch.setVisibility(View.GONE); // 検索ボタンを非表示
+
         isSearchBarVisible = true;
     }
 
@@ -598,9 +603,11 @@ public class MainActivity extends AppCompatActivity {
         llSearchBar.startAnimation(slideOut);
         llSearchBar.setVisibility(View.GONE); // 検索バーを非表示
         btnSearch.setVisibility(View.VISIBLE); // 検索ボタンを再表示
+
         isSearchBarVisible = false;
 
         tvResults.setVisibility(View.GONE); // 検索結果を非表示
+
     }
 
     // 検索回数を長押しで表示

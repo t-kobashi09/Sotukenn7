@@ -159,6 +159,7 @@
         app:layout_constraintHorizontal_chainStyle="spread" />
 
     <!-- マップボタン -->
+
         <ImageButton
         android:id="@+id/button_map"
         android:layout_width="0dp"

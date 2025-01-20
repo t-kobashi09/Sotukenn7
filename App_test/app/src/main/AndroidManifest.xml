@@ -42,6 +42,7 @@
         <!-- MainActivityの設定 -->
         <activity
             android:name=".MainActivity"
+            android:windowSoftInputMode="adjustPan"
             android:exported="true"
             android:label="@string/app_name">
         </activity>
@@ -52,6 +53,7 @@
         <!-- TimerActivityの宣言 -->
         <activity
             android:name=".TimerActivity"
+            android:windowSoftInputMode="adjustPan"
             android:exported="true" />
         <!-- RecordActivityの設定 -->
         <activity
@@ -60,6 +62,7 @@
         <!-- CalendarActivityの宣言 -->
         <activity
             android:name=".CalendarActivity"
+            android:windowSoftInputMode="adjustPan"
             android:exported="true" />
         <!--CalendarAdapterの宣言 -->
 <!--        <activity-->
