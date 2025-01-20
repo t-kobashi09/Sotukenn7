@@ -17,6 +17,7 @@ import android.widget.Button;
 import android.os.Looper;
 import android.view.View;
 import android.widget.Chronometer;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -50,7 +51,8 @@ import androidx.annotation.NonNull;
 
 public class TimerActivity extends AppCompatActivity {
     private EditText etSearch;
-    private Button btnSearch, btnExecuteSearch, btnCloseSearch;
+    private ImageButton btnSearch;
+    private ImageButton btnExecuteSearch, btnCloseSearch;
     private TextView tvSearchCount, tvResults;
     private LinearLayout llSearchBar;
 
@@ -117,7 +119,7 @@ public class TimerActivity extends AppCompatActivity {
         }
 
         // カメラ起動ボタン
-        Button btnCapture = findViewById(R.id.button_camera);
+        ImageButton btnCapture = findViewById(R.id.button_camera);
         btnCapture.setOnClickListener(v -> {
             if (checkAndRequestCameraPermission()) {
                 openCamera();
@@ -125,14 +127,14 @@ public class TimerActivity extends AppCompatActivity {
         });
 
         //メモボタンの設定
-        Button memoButton = findViewById(R.id.button_memo);
+        ImageButton memoButton = findViewById(R.id.button_memo);
         memoButton.setOnClickListener(v -> {
             // メモの内容をポップアップで表示
             showMemoDialog();
         });
 
         // ヘルプボタンの設定
-        FloatingActionButton helpButton = findViewById(R.id.help_Button);
+        ImageButton helpButton = findViewById(R.id.help_Button);
         helpButton.setOnClickListener(v -> {
             navigateToHelpViewActivity();
         });

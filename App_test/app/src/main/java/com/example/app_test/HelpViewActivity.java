@@ -4,6 +4,7 @@ import android.Manifest;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ScrollView;
 import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -14,8 +15,13 @@ public class HelpViewActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.help_view);
 
+        // アクションバーを非表示にする
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().hide();
+        }
+
         // ボタンの設定
-        FloatingActionButton button_home = findViewById(R.id.button_home);
+        ImageButton button_home = findViewById(R.id.button_home);
         button_home.setOnClickListener(v -> {
             navigateToHome();
         });

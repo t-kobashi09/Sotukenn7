@@ -1,0 +1,9 @@
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- 押された時の状態 -->
+    <item android:state_pressed="true" android:drawable="@drawable/button_3d_pressed_design"/>
+
+    <!-- 通常の状態 -->
+    <item android:drawable="@drawable/button_3d_design" />
+
+</selector>

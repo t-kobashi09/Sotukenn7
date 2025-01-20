@@ -1,16 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="16dp"
-    android:paddingBottom="64dp"> <!-- 下部に大きめの余白を追加 -->
+    android:background="@drawable/gradient_background"
+    android:padding="16dp">
 
     <!-- CalendarView -->
     <CalendarView
         android:id="@+id/calendarView"
         android:layout_width="match_parent"
-        android:layout_height="293dp" />
+        android:layout_height="308dp"
+        android:background="#FFFFFF" />
 
     <!-- 選択した日付を表示するテキストビュー -->
     <TextView
@@ -19,6 +23,7 @@
         android:layout_height="wrap_content"
         android:padding="16dp"
         android:text="@string/calender_date"
+        android:textColor="#FFFFFF"
         android:textSize="18sp" />
 
     <!-- スケジュール入力用 -->
@@ -28,44 +33,59 @@
         android:layout_height="48dp"
         android:gravity="center"
         android:text="値がここに表示されます"
-        android:textColor="#000000"
+        android:textColor="#FFFFFF"
         android:textSize="18sp" />
 
     <!-- Memo入力欄 -->
     <EditText
         android:id="@+id/scheduleEditText"
         android:layout_width="match_parent"
-        android:layout_height="184dp"
-        android:layout_weight="1"
+        android:layout_height="80dp"
         android:gravity="top"
         android:hint="Memo"
-        android:inputType="textMultiLine" />
+        android:textColor="#000000"
+        android:background="#66FFFFFF"
+        android:textColorHint="#000000"
+        android:inputType="textMultiLine"
+        android:layout_marginBottom="16dp" />
 
     <!-- ボタンを横並びに配置 -->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="55dp"
+        android:layout_marginBottom="70dp"
         android:orientation="horizontal"
-        android:gravity="center_horizontal"
-        android:layout_marginBottom="32dp"> <!-- ボタン下部の余白をさらに拡大 -->
+        app:layout_constraintBottom_toBottomOf="parent">
 
-        <Button
+        <!-- 戻るボタン-->
+        <ImageButton
             android:id="@+id/backButton"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_weight="1"
-            android:background="@drawable/rounded_button"
-            android:text="Back" />
+            android:layout_width="70dp"
+            android:layout_height="50dp"
+            android:background="@drawable/button_3d_selector"
+            android:contentDescription="戻るボタンです"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:srcCompat="@android:drawable/ic_menu_revert" />
 
-        <Button
+        <!-- スペース（中央寄せ用） -->
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <!-- メモ保存ボタン -->
+        <ImageButton
             android:id="@+id/saveButton"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@drawable/rounded_button"
-            android:text="Save" />
-
+            android:layout_width="70dp"
+            android:layout_height="50dp"
+            android:layout_gravity="end"
+            android:layout_marginBottom="70dp"
+            android:layout_weight="0"
+            android:background="@drawable/button_3d_selector"
+            android:contentDescription="メモ保存ボタンです"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:srcCompat="@android:drawable/ic_menu_save" />
+        <!-- ここまで -->
     </LinearLayout>
 
 </LinearLayout>

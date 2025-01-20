@@ -8,6 +8,7 @@ import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -58,7 +59,8 @@ import androidx.annotation.NonNull;
 
 public class MainActivity extends AppCompatActivity {
     private EditText etSearch;
-    private Button btnSearch, btnExecuteSearch, btnCloseSearch;
+    private ImageButton btnSearch;
+    private ImageButton btnExecuteSearch, btnCloseSearch;
     private TextView tvSearchCount, tvResults;
     private LinearLayout llSearchBar;
 
@@ -101,8 +103,24 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_main);
+//        EdgeToEdge.enable(this);
+//        setContentView(R.layout.activity_main);
+
+//チュートリアル画面関連
+// 初回起動かどうかを判定
+        boolean isFirstLaunch = getSharedPreferences("AppPreferences", MODE_PRIVATE)
+                .getBoolean("isFirstLaunch", true);
+
+        if (isFirstLaunch) {
+            // チュートリアル画面に移動
+            Intent intent = new Intent(MainActivity.this, TutorialActivity.class);
+            startActivity(intent);
+            finish(); // メインアクティビティを終了
+        } else {
+            // 通常のメイン画面を表示
+            setContentView(R.layout.activity_main);
+        }
+//チュートリアル画面関連ここまで
 
         //検索機能
         // UI要素の初期化
@@ -129,31 +147,44 @@ public class MainActivity extends AppCompatActivity {
 
         //公式インスタ遷移
         // TextViewを取得
-//        TextView textView = findViewById(R.id.spotView);
+        ImageButton textView = findViewById(R.id.spot_view);
 
-        // クリックイベントを設定
-//        textView.setOnClickListener(v -> {
-//            // 外部ブラウザでURLを開く
-//            String url = "https://www.instagram.com/s/aGlnaGxpZ2h0OjE4MDUzNzI4OTI0NzYzNzM1?story_media_id=3503694777097793936&igsh=MTNkamxwb2FrcWx4eQ==";
-////            String url = "https://www.canva.com/design/DAGYeq50wO8/jtEXSJ7QwkHZmjdOOcR-sg/view?utm_content=DAGYeq50wO8&utm_campaign=designshare&utm_medium=link&utm_source=editor";
-//            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
-//            startActivity(intent);
-//        });
+//         クリックイベントを設定
+        textView.setOnClickListener(v -> {
+            // 外部ブラウザでURLを開く
+            String url = "https://www.instagram.com/s/aGlnaGxpZ2h0OjE4MDUzNzI4OTI0NzYzNzM1?story_media_id=3503694777097793936&igsh=MTNkamxwb2FrcWx4eQ==";
+//            String url = "https://www.canva.com/design/DAGYeq50wO8/jtEXSJ7QwkHZmjdOOcR-sg/view?utm_content=DAGYeq50wO8&utm_campaign=designshare&utm_medium=link&utm_source=editor";
+            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+            startActivity(intent);
+        });
 
         // ヘルプボタンの設定
-        FloatingActionButton helpButton = findViewById(R.id.help_Button);
+        ImageButton helpButton = findViewById(R.id.help_Button);
         helpButton.setOnClickListener(v -> {
             navigateToHelpViewActivity();
         });
 
 
         // カメラ起動ボタン
-        Button btnCapture = findViewById(R.id.button_camera);
+        ImageButton btnCapture = findViewById(R.id.button_camera);
+
+        // カメラアプリ起動ボタン
         btnCapture.setOnClickListener(v -> {
-            if (checkAndRequestCameraPermission()) {
-                openCamera();
+            // カメラのパーミッションが許可されているか確認
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
+                    == PackageManager.PERMISSION_GRANTED) {
+                openCameraApp(); // 許可されていればカメラを起動
+            } else {
+                // 許可されていない場合、パーミッションリクエスト
+                ActivityCompat.requestPermissions(this,
+                        new String[]{Manifest.permission.CAMERA}, CAMERA_REQUEST_CODE);
             }
         });
+        //        btnCapture.setOnClickListener(v -> {
+//            if (checkAndRequestCameraPermission()) {
+//                openCamera();
+//            }
+//        });
 
         // 開始ボタン
         Button btnStart = findViewById(R.id.button_start);
@@ -163,14 +194,14 @@ public class MainActivity extends AppCompatActivity {
 
 
     //メモボタンの設定
-        Button memoButton = findViewById(R.id.button_memo);
+        ImageButton memoButton = findViewById(R.id.button_memo);
         memoButton.setOnClickListener(v -> {
             // メモの内容をポップアップで表示
             showMemoDialog();
         });
 
         // 記録ボタンの設定
-        Button recordButton = findViewById(R.id.button_record); // 記録ボタンを取得
+        ImageButton recordButton = findViewById(R.id.button_record); // 記録ボタンを取得
         recordButton.setOnClickListener(v -> {
             navigateToRecordActivity();
         });
@@ -195,11 +226,12 @@ public class MainActivity extends AppCompatActivity {
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 
-//    Toast.makeText(this, requestCode + "権限" + grantResults[0], Toast.LENGTH_SHORT).show();
+    Toast.makeText(this, requestCode + "権限" + grantResults[0], Toast.LENGTH_SHORT).show();
         if (requestCode == 101) {
             if(ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED){
                 Toast.makeText(this, "カメラ使用許可", Toast.LENGTH_SHORT).show();
-                openCamera();
+                openCameraApp();
+//                openCamera();
             }
 //        Toast.makeText(this, "*" + (Manifest.permission.CAMERA) , Toast.LENGTH_SHORT).show();
 //
@@ -248,16 +280,17 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
     // カメラ起動
-    private void openCamera() {
-        Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        Toast.makeText(this, "openCamera", Toast.LENGTH_SHORT).show();
-        if (cameraIntent.resolveActivity(getPackageManager()) != null) {
-            startActivityForResult(cameraIntent, CAMERA_REQUEST_CODE);
+    // カメラアプリを起動
+    private void openCameraApp() {
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+
+        // カメラアプリがインストールされているか確認
+        if (intent.resolveActivity(getPackageManager()) != null) {
+            startActivity(intent); // カメラアプリを起動
         } else {
-            Toast.makeText(this, "カメラが利用できません", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "カメラアプリが見つかりません", Toast.LENGTH_SHORT).show();
         }
     }
-
     //カメラ関連ここまで
 
     //位置情報追跡

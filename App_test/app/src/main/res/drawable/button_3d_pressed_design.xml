@@ -1,0 +1,22 @@
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- 背景の塗りつぶし（暗くする） -->
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="#D6D3CF" />
+            <corners android:radius="8dp" />
+        </shape>
+    </item>
+
+    <!-- 左側と上側の枠線（押し込まれる感を強調） -->
+    <item android:left="-2dp" android:top="-2dp">
+        <shape android:shape="rectangle">
+            <corners android:radius="7dp" />
+            <stroke
+                android:width="5dp"
+                android:color="#8E9DAF" />
+        </shape>
+    </item>
+
+
+</layer-list>
