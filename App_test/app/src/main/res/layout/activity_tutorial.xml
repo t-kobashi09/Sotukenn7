@@ -109,7 +109,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:textStyle="bold"
+                android:textColor="#F50A2A8C"
                 android:text="スマのんをはじめる"
+                app:backgroundTint="@null"
                 android:background="@drawable/button_3d_selector"
                />
 

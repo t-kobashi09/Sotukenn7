@@ -3,12 +3,15 @@ package com.example.app_test;
 import android.Manifest;
 
 import android.os.Bundle;
+import android.util.TypedValue;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -55,6 +58,7 @@ import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.location.Priority;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
 
 import androidx.annotation.NonNull;
 
@@ -523,15 +527,17 @@ public class MainActivity extends AppCompatActivity {
     private void executeSearch() {
         // 検索回数が残っていない場合はメッセージを表示
         if (searchCount <= 0) {
-            tvResults.setText("検索回数が上限に達しました。");
-            tvResults.setVisibility(View.VISIBLE);
+            Snackbar.make(etSearch, "検索回数が上限に達しました。", Snackbar.LENGTH_LONG)
+                    .setAnchorView(etSearch) // EditTextの直下に表示
+                    .show();
             return;
         }
 
         String query = etSearch.getText().toString().trim(); // 検索ワードを取得
         if (query.isEmpty()) { // 検索ワードが空であればエラーメッセージ
-            tvResults.setText("検索キーワードを入力してください。");
-            tvResults.setVisibility(View.VISIBLE);
+            Snackbar.make(etSearch, "検索キーワードを入力してください。", Snackbar.LENGTH_LONG)
+                    .setAnchorView(etSearch) // EditTextの直下に表示
+                    .show();
             return;
         }
 
@@ -554,12 +560,39 @@ public class MainActivity extends AppCompatActivity {
 
         // 結果がなければメッセージを表示
         if (results.isEmpty()) {
-            tvResults.setText("ヒットしませんでした。");
+            Snackbar.make(llSearchBar, "ヒットしませんでした。", Snackbar.LENGTH_LONG)
+                    .setAnchorView(llSearchBar) // 画面中央に表示
+                    .show();
         } else {
-            tvResults.setText("検索結果:\n" + String.join("\n\n", results)); // 検索結果を表示
+            // 検索結果を表示
+            Snackbar snackbar = Snackbar.make(llSearchBar, "検索結果:\n" + String.join("\n\n", results), Snackbar.LENGTH_INDEFINITE);
+            View snackbarView = snackbar.getView();
+
+            // LayoutParamsを取得して調整
+            FrameLayout.LayoutParams params = (FrameLayout.LayoutParams) snackbarView.getLayoutParams();
+            // Gravityを設定して中央に表示
+            params.gravity = Gravity.CENTER_HORIZONTAL | Gravity.TOP;  // 中央、かつ少し上に配置
+            params.topMargin = 100;  // 少し上に調整（必要に応じて値を変更）
+            snackbarView.setLayoutParams(params);
+
+            // Snackbarのテキストビューを取得
+            TextView textView = snackbarView.findViewById(com.google.android.material.R.id.snackbar_text);
+            // 文字サイズを調整（必要に応じてサイズ変更）
+            textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);  // 文字サイズを調整（例: 16sp）
+
+            // テキストの最大行数を設定（必要に応じて変更）
+            textView.setMaxLines(Integer.MAX_VALUE);  // 行数制限を解除
+
+            snackbar.setAction("閉じる", new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // Snackbarを閉じる処理
+                }
+            });
+
+            snackbar.show();
         }
 
-        tvResults.setVisibility(View.VISIBLE); // 結果表示
         searchCount--; // 検索回数を減らす
         updateSearchCountDisplay(); // 検索回数を更新
     }

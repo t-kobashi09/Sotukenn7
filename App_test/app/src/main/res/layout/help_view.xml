@@ -34,6 +34,7 @@
                 android:paddingBottom="16dp" />
 
             <ImageView
+                android:id="@+id/image_home_1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:scaleType="fitCenter"
@@ -43,6 +44,7 @@
                 android:paddingBottom="16dp" />
 
             <ImageView
+                android:id="@+id/image_home_2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:scaleType="fitCenter"
@@ -61,6 +63,7 @@
                 android:paddingBottom="16dp" />
 
             <ImageView
+                android:id="@+id/image_timer_1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:scaleType="fitCenter"
@@ -70,6 +73,7 @@
                 android:paddingBottom="16dp" />
 
             <ImageView
+                android:id="@+id/image_timer_2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:scaleType="fitCenter"
@@ -88,6 +92,7 @@
                 android:paddingBottom="16dp" />
 
             <ImageView
+                android:id="@+id/image_calendar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:scaleType="fitCenter"
@@ -114,7 +119,7 @@
                 android:paddingBottom="16dp" />
         </LinearLayout>
     </ScrollView>
-    
+
     <!-- 画面最上部移動ボタン -->
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/to_top"
@@ -129,6 +134,14 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_margin="15dp"/>
+
+    <!-- ズームボタン（非表示で開始） -->
+    <Button
+        android:id="@+id/zoom_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="ズーム"
+        android:visibility="gone" />
 
     <!-- 固定ヘッダー -->
     <androidx.constraintlayout.widget.ConstraintLayout
