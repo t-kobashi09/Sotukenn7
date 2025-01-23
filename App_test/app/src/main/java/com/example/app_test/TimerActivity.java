@@ -5,6 +5,7 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import com.google.android.gms.location.LocationRequest;
@@ -55,8 +56,9 @@ import androidx.annotation.NonNull;
 
 public class TimerActivity extends AppCompatActivity {
     private EditText etSearch;
-    private ImageButton btnSearch;
-    private ImageButton btnExecuteSearch, btnCloseSearch;
+    private ImageButton btnSearch , btnExecuteSearch, btnCloseSearch;
+    //検索回数表示バー
+    private Snackbar searchCountSnackbar;
     private TextView tvSearchCount, tvResults;
     private LinearLayout llSearchBar;
 
@@ -92,6 +94,7 @@ public class TimerActivity extends AppCompatActivity {
             Manifest.permission.ACCESS_MEDIA_LOCATION,
             Manifest.permission.CAMERA
     };
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -130,11 +133,19 @@ public class TimerActivity extends AppCompatActivity {
             }
         });
 
-        //メモボタンの設定
+//        //メモボタンの設定
+//        ImageButton memoButton = findViewById(R.id.button_memo);
+//        memoButton.setOnClickListener(v -> {
+//            // メモの内容をポップアップで表示
+//            showMemoDialog();
+//        });
+
+        // メモボタンの取得
         ImageButton memoButton = findViewById(R.id.button_memo);
+        // メモボタンのクリック処理
         memoButton.setOnClickListener(v -> {
-            // メモの内容をポップアップで表示
-            showMemoDialog();
+            String currentDate = getCurrentDate(); // 現在の日付を取得
+            showMemoDialog(currentDate); // メモダイアログを表示
         });
 
         // ヘルプボタンの設定
@@ -178,7 +189,7 @@ public class TimerActivity extends AppCompatActivity {
 //    Toast.makeText(this, requestCode + "権限" + grantResults[0], Toast.LENGTH_SHORT).show();
         if (requestCode == 101) {
             if(ContextCompat.checkSelfPermission(TimerActivity.this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED){
-                Toast.makeText(this, "カメラ使用許可", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(this, "カメラ使用許可", Toast.LENGTH_SHORT).show();
                 openCamera();
             }
 //        Toast.makeText(this, "*" + (Manifest.permission.CAMERA) , Toast.LENGTH_SHORT).show();
@@ -223,7 +234,7 @@ public class TimerActivity extends AppCompatActivity {
     // カメラ起動
     private void openCamera() {
         Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        Toast.makeText(this, "openCamera", Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, "openCamera", Toast.LENGTH_SHORT).show();
         if (cameraIntent.resolveActivity(getPackageManager()) != null) {
             startActivityForResult(cameraIntent, CAMERA_REQUEST_CODE);
         } else {
@@ -273,7 +284,6 @@ public class TimerActivity extends AppCompatActivity {
         java.text.SimpleDateFormat dateFormat = new java.text.SimpleDateFormat("yyyy/MM/dd");
         return dateFormat.format(calendar.getTime());
     }
-
 
     //ストップボタン押下時
     public void onStop(View v) {
@@ -361,22 +371,39 @@ public class TimerActivity extends AppCompatActivity {
         finish();
     }
 
-    // メモ表示用ダイアログ
-    private void showMemoDialog() {
-        // メモの内容をここで設定
-        String memoContent = "ここにメモの内容が表示されます。";
+    // メモダイアログの表示
+    private void showMemoDialog(String date) {
+        // メモの内容を表示する EditText を作成
+        EditText memoEditText = new EditText(this);
+        memoEditText.setText(getSavedMemo(date));  // 既存のメモがあれば表示
 
         // ダイアログを作成
         new AlertDialog.Builder(this)
-                .setTitle("メモ")
-                .setMessage(memoContent) // メモの内容を設定
-                .setPositiveButton("OK", (dialog, which) -> {
-                    // OKボタンが押された場合の処理（閉じるだけ）
+                .setTitle("メモ (" + date + ")") // 日付をタイトルに表示
+                .setView(memoEditText)  // EditTextをダイアログに追加
+                .setPositiveButton("保存", (dialog, which) -> {
+                    // 保存ボタンが押された場合の処理
+                    saveMemo(date, memoEditText.getText().toString()); // 入力内容を保存
+                    Toast.makeText(TimerActivity.this, "メモを保存しました", Toast.LENGTH_SHORT).show();
                 })
+                .setNegativeButton("キャンセル", null) // キャンセルボタン
                 .create()
                 .show(); // ダイアログを表示
     }
 
+    // メモの保存
+    private void saveMemo(String date, String memo) {
+        SharedPreferences sharedPreferences = getSharedPreferences("memo_pref", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("memo_" + date, memo);  // 日付ごとにメモを保存
+        editor.apply();  // 保存を確定
+    }
+
+    // 保存されたメモを取得
+    private String getSavedMemo(String date) {
+        SharedPreferences sharedPreferences = getSharedPreferences("memo_pref", MODE_PRIVATE);
+        return sharedPreferences.getString("memo_" + date, "");  // 日付ごとのメモを取得、なければ空文字
+    }
 
     public void onMapShowCurrentButtonClick(View view){
         //緯度経度をもとにマップアプリと連携するURIを生成
@@ -581,14 +608,26 @@ public class TimerActivity extends AppCompatActivity {
         }
 
         searchCount--; // 検索回数を減らす
-        updateSearchCountDisplay(); // 検索回数を更新
+//        updateSearchCountDisplay(); // 検索回数を更新
     }
 
-    // 検索回数を表示
-    private void updateSearchCountDisplay() {
-        tvSearchCount.setText("検索可能回数: " + searchCount);
-        tvSearchCount.setVisibility(View.GONE); // 長押し時のみ表示
+    // 検索回数を更新
+//    private void updateSearchCountDisplay() {
+////        tvSearchCount.setText("検索可能回数: " + searchCount);
+////        tvSearchCount.setVisibility(View.GONE); // 長押し時のみ表示
+//        searchCountSnackbar = Snackbar.make(llSearchBar, "検索可能回数: " + searchCount, Snackbar.LENGTH_LONG);
+//    }
+    // 検索回数を長押しで表示
+    private boolean showSearchCount() {
+//        tvSearchCount.setText("検索可能回数: " + searchCount);
+//        tvSearchCount.setVisibility(View.VISIBLE); // 表示
+        Snackbar.make(llSearchBar, "検索可能回数: " + searchCount, Snackbar.LENGTH_LONG)
+                .setAnchorView(llSearchBar) // 画面中央に表示
+                .show();
+        btnSearch.postDelayed(() -> tvSearchCount.setVisibility(View.GONE), 2000); // 2秒後に非表示
+        return true; // 長押しアクションを終了
     }
+
 
     // 検索バーの表示/非表示を切り替え
     private void toggleSearchBar() {
@@ -626,14 +665,5 @@ public class TimerActivity extends AppCompatActivity {
         tvResults.setVisibility(View.GONE); // 検索結果を非表示
         btnSearch.setVisibility(View.VISIBLE); // 検索ボタンを再表示
     }
-
-    // 検索回数を長押しで表示
-    private boolean showSearchCount() {
-        tvSearchCount.setText("検索可能回数: " + searchCount);
-        tvSearchCount.setVisibility(View.VISIBLE); // 表示
-        btnSearch.postDelayed(() -> tvSearchCount.setVisibility(View.GONE), 2000); // 2秒後に非表示
-        return true; // 長押しアクションを終了
-    }
-
 
 }

@@ -72,7 +72,7 @@ public class CalendarActivity extends AppCompatActivity {
             long currentElapsedTime = timeData.getOrDefault(selectedDate, 0L);
             timeData.put(selectedDate, currentElapsedTime);
             saveData();
-            Toast.makeText(CalendarActivity.this, "Schedule saved for " + selectedDate, Toast.LENGTH_SHORT).show();
+            Toast.makeText(CalendarActivity.this, "メモを保存しました", Toast.LENGTH_SHORT).show();
         });
 
         // 戻るボタンの処理
