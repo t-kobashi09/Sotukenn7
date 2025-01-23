@@ -104,7 +104,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="右上のホームボタンを押してスマのん時間を始めてみましょう！"
+                android:text="左上のもどるボタンを押してスマのん時間を始めてみましょう！"
                 android:textStyle="bold"
                 android:textColor="#FFFFFF"
                 android:textSize="20sp"
@@ -135,13 +135,13 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_margin="15dp"/>
 
-    <!-- ズームボタン（非表示で開始） -->
-    <Button
-        android:id="@+id/zoom_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="ズーム"
-        android:visibility="gone" />
+<!--    &lt;!&ndash; ズームボタン（非表示で開始） &ndash;&gt;-->
+<!--    <Button-->
+<!--        android:id="@+id/zoom_button"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="ズーム"-->
+<!--        android:visibility="gone" />-->
 
     <!-- 固定ヘッダー -->
     <androidx.constraintlayout.widget.ConstraintLayout

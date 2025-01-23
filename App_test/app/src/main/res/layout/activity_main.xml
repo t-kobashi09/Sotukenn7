@@ -62,30 +62,30 @@
                 android:id="@+id/llSearchBar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="40dp"
                 android:orientation="horizontal"
-                android:visibility="gone"
-                android:layout_marginTop="16dp">
+                android:visibility="gone">
 
                 <EditText
                     android:id="@+id/etSearch"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
                     android:layout_weight="1"
-                    android:hint="検索キーワードを入力"
-                    android:padding="8dp"
                     android:background="#FFFFFF"
-                    android:layout_marginEnd="8dp" />
+                    android:hint="検索キーワードを入力"
+                    android:padding="8dp" />
 
                 <ImageButton
                     android:id="@+id/btnExecuteSearch"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="#000000"
+                    android:layout_marginEnd="8dp"
                     android:background="@drawable/button_3d_selector"
-                    app:backgroundTint="@null"
-                    app:srcCompat="@android:drawable/ic_menu_search"
                     android:contentDescription="検索ボタンです"
-                    android:layout_marginEnd="8dp" />
+                    android:textColor="#000000"
+                    app:backgroundTint="@null"
+                    app:srcCompat="@android:drawable/ic_menu_search" />
 
                 <ImageButton
                     android:id="@+id/btnCloseSearch"
@@ -93,7 +93,7 @@
                     android:layout_height="wrap_content"
                     android:background="@drawable/button_3d_selector"
                     app:backgroundTint="@null"
-                    app:srcCompat="@android:drawable/ic_menu_close_clear_cancel"/>
+                    app:srcCompat="@android:drawable/ic_menu_close_clear_cancel" />
             </LinearLayout>
 
             <!-- 検索結果 -->
@@ -113,6 +113,7 @@
                 android:id="@+id/tvSearchCount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textColor="#000000"
                 android:text="検索可能回数: 10"
                 android:textSize="16sp"
                 android:visibility="gone" />
@@ -131,7 +132,7 @@
         android:elevation="0dp"
         android:stateListAnimator="@null"
         android:text="Start"
-        android:textColor="@android:color/black"
+        android:textColor="#323237"
         android:textSize="36sp"
         app:backgroundTint="@null"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -167,7 +168,7 @@
         android:layout_marginBottom="70dp"
         android:layout_marginHorizontal="8dp"
         android:onClick="onMapShowCurrentButtonClick"
-        app:srcCompat="@android:drawable/ic_dialog_map"
+        app:srcCompat="@drawable/image_map"
         android:background="@drawable/button_3d_selector"
         android:scaleType="centerInside"
         android:contentDescription="マップボタンです"

@@ -621,10 +621,10 @@ public class TimerActivity extends AppCompatActivity {
         slideOut.setInterpolator(new android.view.animation.DecelerateInterpolator()); // アニメーションのイージング
         llSearchBar.startAnimation(slideOut);
         llSearchBar.setVisibility(View.GONE); // 検索バーを非表示
-        btnSearch.setVisibility(View.VISIBLE); // 検索ボタンを再表示
         isSearchBarVisible = false;
 
         tvResults.setVisibility(View.GONE); // 検索結果を非表示
+        btnSearch.setVisibility(View.VISIBLE); // 検索ボタンを再表示
     }
 
     // 検索回数を長押しで表示

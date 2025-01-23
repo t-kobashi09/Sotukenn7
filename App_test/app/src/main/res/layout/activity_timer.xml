@@ -64,7 +64,7 @@
             android:orientation="vertical">
             <!-- 検索ボタン -->
 
-            <!-- 検索バー -->
+            <!-- 検索ボタン -->
             <ImageButton
                 android:id="@+id/btnSearch"
                 android:layout_width="100dp"
@@ -81,13 +81,14 @@
                 android:contentDescription="検索ボタンです"
                 />
 
+            <!-- 検索バー -->
             <LinearLayout
                 android:id="@+id/llSearchBar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="40dp"
                 android:orientation="horizontal"
-                android:visibility="gone"
-                android:layout_marginTop="16dp">
+                android:visibility="gone">
 
                 <EditText
                     android:id="@+id/etSearch"
@@ -144,8 +145,7 @@
     </ScrollView>
     <!-- ここまで -->
 
-    <!-- タイマーテキスト -->
-
+    <!-- ストップボタン -->
     <Button
         android:id="@+id/button_end"
         android:layout_width="0dp"
@@ -157,7 +157,7 @@
         android:onClick="onStop"
         android:text="@string/end"
         android:contentDescription="記録ボタンです"
-        android:textColor="#000000"
+        android:textColor="#323237"
         android:textSize="20sp"
         app:backgroundTint="@null"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -188,7 +188,7 @@
         android:layout_marginBottom="70dp"
         android:layout_marginHorizontal="8dp"
         android:onClick="onMapShowCurrentButtonClick"
-        app:srcCompat="@android:drawable/ic_dialog_map"
+        app:srcCompat="@drawable/image_map"
         android:background="@drawable/button_3d_selector"
         android:scaleType="centerInside"
         android:contentDescription="マップボタンです"
