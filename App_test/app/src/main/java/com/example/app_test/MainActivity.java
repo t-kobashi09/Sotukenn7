@@ -109,23 +109,24 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        EdgeToEdge.enable(this);
-//        setContentView(R.layout.activity_main);
+        EdgeToEdge.enable(this);
+        setContentView(R.layout.activity_main);
 
+//展示用の場合コメントアウト
 //チュートリアル画面関連
 // 初回起動かどうかを判定
-        boolean isFirstLaunch = getSharedPreferences("AppPreferences", MODE_PRIVATE)
-                .getBoolean("isFirstLaunch", true);
-
-        if (isFirstLaunch) {
-            // チュートリアル画面に移動
-            Intent intent = new Intent(MainActivity.this, TutorialActivity.class);
-            startActivity(intent);
-            finish(); // メインアクティビティを終了
-        } else {
-            // 通常のメイン画面を表示
-            setContentView(R.layout.activity_main);
-        }
+//        boolean isFirstLaunch = getSharedPreferences("AppPreferences", MODE_PRIVATE)
+//                .getBoolean("isFirstLaunch", true);
+//
+//        if (isFirstLaunch) {
+//            // チュートリアル画面に移動
+//            Intent intent = new Intent(MainActivity.this, TutorialActivity.class);
+//            startActivity(intent);
+//            finish(); // メインアクティビティを終了
+//        } else {
+//            // 通常のメイン画面を表示
+//            setContentView(R.layout.activity_main);
+//        }
 //チュートリアル画面関連ここまで
 
         //検索機能

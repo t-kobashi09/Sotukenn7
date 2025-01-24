@@ -45,10 +45,11 @@ public class TutorialActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // チュートリアル完了を記録
-                getSharedPreferences("AppPreferences", MODE_PRIVATE)
-                        .edit()
-                        .putBoolean("isFirstLaunch", false)
-                        .apply();
+                //展示用の場合49~52をコメントアウト
+//                getSharedPreferences("AppPreferences", MODE_PRIVATE)
+//                        .edit()
+//                        .putBoolean("isFirstLaunch", false)
+//                        .apply();
 
                 // メイン画面に移動
                 Intent intent = new Intent(TutorialActivity.this, MainActivity.class);

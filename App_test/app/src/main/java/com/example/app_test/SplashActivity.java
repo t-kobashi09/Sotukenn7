@@ -25,11 +25,19 @@ public class SplashActivity  extends AppCompatActivity {
         fadeIn.setDuration(1500); // 1.5秒
 //        logo.startAnimation(fadeIn);
 
-// 3秒後にMainActivityへ遷移
+////展示用の場合コメントアウト
+// 2秒後にTutorialActivityへ遷移
         new Handler().postDelayed(() -> {
-            Intent intent = new Intent(SplashActivity.this, MainActivity.class);
+            Intent intent = new Intent(SplashActivity.this, TutorialActivity.class);
             startActivity(intent);
             finish(); // SplashActivityを終了
-        }, 3000); // 3000ミリ秒（3秒）
+        }, 2000); // 2000ミリ秒（3秒）
+
+// 2秒後にMainActivityへ遷移
+//        new Handler().postDelayed(() -> {
+//            Intent intent = new Intent(SplashActivity.this, MainActivity.class);
+//            startActivity(intent);
+//            finish(); // SplashActivityを終了
+//        }, 2000); // 2000ミリ秒（3秒）
     }
 }

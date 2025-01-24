@@ -10,11 +10,11 @@
     android:padding="16dp">
 
     <!-- CalendarView -->
-    <CalendarView
-        android:id="@+id/calendarView"
-        android:layout_width="match_parent"
-        android:layout_height="308dp"
-        android:background="#FFFFFF" />
+        <CalendarView
+            android:id="@+id/calendarView"
+            android:layout_width="match_parent"
+            android:layout_height="308dp"
+            android:background="#9DC3FD" />
 
     <!-- 選択した日付を表示するテキストビュー -->
     <TextView

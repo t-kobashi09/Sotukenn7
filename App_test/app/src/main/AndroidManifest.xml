@@ -36,8 +36,12 @@
         </activity>
 
         <!-- チュートリアル画面 -->
+        <!-- 展示用 -->
         <activity android:name=".TutorialActivity"
-            android:exported="false" />
+            android:exported="true" />
+        <!-- 配布用 -->
+<!--    <activity android:name=".TutorialActivity"-->
+<!--        android:exported="false" />-->
 
         <!-- MainActivityの設定 -->
         <activity
@@ -46,6 +50,13 @@
             android:exported="true"
             android:label="@string/app_name">
         </activity>
+
+        <!--        <activity-->
+<!--            android:name=".MainActivity"-->
+<!--            android:windowSoftInputMode="adjustPan"-->
+<!--            android:exported="true"-->
+<!--            android:label="@string/app_name">-->
+<!--        </activity>-->
         <!-- HelpViewActivityの宣言 -->
         <activity
             android:name=".HelpViewActivity"
