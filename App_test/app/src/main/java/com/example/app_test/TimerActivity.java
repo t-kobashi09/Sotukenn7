@@ -133,13 +133,6 @@ public class TimerActivity extends AppCompatActivity {
             }
         });
 
-//        //メモボタンの設定
-//        ImageButton memoButton = findViewById(R.id.button_memo);
-//        memoButton.setOnClickListener(v -> {
-//            // メモの内容をポップアップで表示
-//            showMemoDialog();
-//        });
-
         // メモボタンの取得
         ImageButton memoButton = findViewById(R.id.button_memo);
         // メモボタンのクリック処理
@@ -379,7 +372,7 @@ public class TimerActivity extends AppCompatActivity {
 
         // ダイアログを作成
         new AlertDialog.Builder(this)
-                .setTitle("メモ (" + date + ")") // 日付をタイトルに表示
+                .setTitle("Memo (" + date + ")") // 日付をタイトルに表示
                 .setView(memoEditText)  // EditTextをダイアログに追加
                 .setPositiveButton("保存", (dialog, which) -> {
                     // 保存ボタンが押された場合の処理
@@ -608,19 +601,9 @@ public class TimerActivity extends AppCompatActivity {
         }
 
         searchCount--; // 検索回数を減らす
-//        updateSearchCountDisplay(); // 検索回数を更新
     }
-
-    // 検索回数を更新
-//    private void updateSearchCountDisplay() {
-////        tvSearchCount.setText("検索可能回数: " + searchCount);
-////        tvSearchCount.setVisibility(View.GONE); // 長押し時のみ表示
-//        searchCountSnackbar = Snackbar.make(llSearchBar, "検索可能回数: " + searchCount, Snackbar.LENGTH_LONG);
-//    }
     // 検索回数を長押しで表示
     private boolean showSearchCount() {
-//        tvSearchCount.setText("検索可能回数: " + searchCount);
-//        tvSearchCount.setVisibility(View.VISIBLE); // 表示
         Snackbar.make(llSearchBar, "検索可能回数: " + searchCount, Snackbar.LENGTH_LONG)
                 .setAnchorView(llSearchBar) // 画面中央に表示
                 .show();

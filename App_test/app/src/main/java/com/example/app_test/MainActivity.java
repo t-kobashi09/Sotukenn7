@@ -158,8 +158,9 @@ public class MainActivity extends AppCompatActivity {
 //         クリックイベントを設定
         textView.setOnClickListener(v -> {
             // 外部ブラウザでURLを開く
-            String url = "https://www.instagram.com/s/aGlnaGxpZ2h0OjE4MDUzNzI4OTI0NzYzNzM1?story_media_id=3503694777097793936&igsh=MTNkamxwb2FrcWx4eQ==";
-//            String url = "https://www.canva.com/design/DAGYeq50wO8/jtEXSJ7QwkHZmjdOOcR-sg/view?utm_content=DAGYeq50wO8&utm_campaign=designshare&utm_medium=link&utm_source=editor";
+            String url = "https://www.instagram.com/s/aGlnaGxpZ2h0OjE4MDUzNzI4OTI0NzYzNzM1?story_media_id=3526874041267776272&igsh=MTNkamxwb2FrcWx4eQ==";
+//          String url = "https://www.instagram.com/s/aGlnaGxpZ2h0OjE4MDUzNzI4OTI0NzYzNzM1?story_media_id=3503694777097793936&igsh=MTNkamxwb2FrcWx4eQ==";
+//          String url = "https://www.canva.com/design/DAGYeq50wO8/jtEXSJ7QwkHZmjdOOcR-sg/view?utm_content=DAGYeq50wO8&utm_campaign=designshare&utm_medium=link&utm_source=editor";
             Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
             startActivity(intent);
         });
@@ -356,7 +357,7 @@ public class MainActivity extends AppCompatActivity {
 
         // ダイアログを作成
         new AlertDialog.Builder(this)
-                .setTitle("メモ (" + date + ")") // 日付をタイトルに表示
+                .setTitle("Memo (" + date + ")") // 日付をタイトルに表示
                 .setView(memoEditText)  // EditTextをダイアログに追加
                 .setPositiveButton("保存", (dialog, which) -> {
                     // 保存ボタンが押された場合の処理
