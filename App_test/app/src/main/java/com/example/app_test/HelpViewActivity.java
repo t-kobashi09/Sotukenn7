@@ -19,6 +19,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 public class HelpViewActivity extends AppCompatActivity{
     private ImageView image_home_1 , image_home_2 , image_timer_1 , image_timer_2 , image_calendar;
     private float scale = 1f;
+    public static final String EXTRA_PREVIOUS_PAGE = "EXTRA_PREVIOUS_PAGE";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +30,13 @@ public class HelpViewActivity extends AppCompatActivity{
         if (getSupportActionBar() != null) {
             getSupportActionBar().hide();
         }
+
+        // Intentから遷移元の情報を取得
+        Intent intent = getIntent();
+        int que_page = intent.getIntExtra("que", 0);
+        long que_elapsedTime = intent.getLongExtra("que_elapsed_time", 0);
+//        Toast.makeText(getApplicationContext(),  "遷移ページ：" + que_page, Toast.LENGTH_SHORT).show();
+//        Toast.makeText(getApplicationContext(),  "タイマー：" + que_elapsedTime, Toast.LENGTH_SHORT).show();
 
         image_home_1 = findViewById(R.id.image_home_1);
         image_home_2 = findViewById(R.id.image_home_2);
@@ -45,7 +53,26 @@ public class HelpViewActivity extends AppCompatActivity{
 
         // ボタンの設定
         ImageButton button_home = findViewById(R.id.button_home);
-        button_home.setOnClickListener(v -> navigateToHome());
+//        button_home.setOnClickListener(v -> navigateToHome());
+        // 戻るボタンの設定
+        findViewById(R.id.button_home).setOnClickListener(v -> {
+//            Toast.makeText(getApplicationContext(),  "遷移ページ：" + que_page, Toast.LENGTH_SHORT).show();
+//            Toast.makeText(getApplicationContext(),  "タイマー：" + que_elapsedTime, Toast.LENGTH_SHORT).show();
+
+            if(que_page == 1){
+                Intent intents = new Intent(this, TimerActivity.class);
+                intents.putExtra("elapsed_time", que_elapsedTime);
+                intents.putExtra("que", 1);
+                startActivity(intents);
+                finish();
+            }else {
+                Intent intents = new Intent(this, MainActivity.class);
+                startActivity(intents);
+                finish();
+            }
+
+
+        });
 
         // ScrollViewとFloatingActionButtonの参照
         ScrollView scrollView = findViewById(R.id.scrollView);
@@ -106,13 +133,5 @@ public class HelpViewActivity extends AppCompatActivity{
 
         // Dialogを表示
         dialog.show();
-    }
-
-
-    //ホーム画面遷移
-    private void navigateToHome() {
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
-        finish();
     }
 }

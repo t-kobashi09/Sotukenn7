@@ -33,6 +33,7 @@ public class SplashActivity  extends AppCompatActivity {
             finish(); // SplashActivityを終了
         }, 2000); // 2000ミリ秒（3秒）
 
+////配布用の場合コメントアウト
 // 2秒後にMainActivityへ遷移
 //        new Handler().postDelayed(() -> {
 //            Intent intent = new Intent(SplashActivity.this, MainActivity.class);

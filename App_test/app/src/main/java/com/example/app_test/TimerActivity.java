@@ -51,9 +51,12 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import androidx.annotation.NonNull;
-
+import android.os.Bundle;
+import android.view.KeyEvent;
+import android.widget.Toast;
 public class TimerActivity extends AppCompatActivity {
     private EditText etSearch;
     private ImageButton btnSearch , btnExecuteSearch, btnCloseSearch;
@@ -95,7 +98,6 @@ public class TimerActivity extends AppCompatActivity {
             Manifest.permission.CAMERA
     };
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -127,9 +129,17 @@ public class TimerActivity extends AppCompatActivity {
 
         // カメラ起動ボタン
         ImageButton btnCapture = findViewById(R.id.button_camera);
+
+        // カメラアプリ起動ボタン
         btnCapture.setOnClickListener(v -> {
-            if (checkAndRequestCameraPermission()) {
-                openCamera();
+            // カメラのパーミッションが許可されているか確認
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
+                    == PackageManager.PERMISSION_GRANTED) {
+                openCameraApp(); // 許可されていればカメラを起動
+            } else {
+                // 許可されていない場合、パーミッションリクエスト
+                ActivityCompat.requestPermissions(this,
+                        new String[]{Manifest.permission.CAMERA}, CAMERA_REQUEST_CODE);
             }
         });
 
@@ -150,16 +160,30 @@ public class TimerActivity extends AppCompatActivity {
         //タイマー機能
         // Chronometerの取得
         chronometer = findViewById(R.id.chron_text);
-        chronometer.setBase(SystemClock.elapsedRealtime() - elapsedTime);
-        chronometer.start();
-        isChronometerRunning = true;
-
         // Chronometerの初期設定
-        chronometer.setText(formatElapsedTime(0)); // 初期値を「00:00:00」に設定
+        elapsedTime = 0; // 初期化
+
+        Intent intent = getIntent();
+        int que_page = intent.getIntExtra("que", 0);
+//        Toast.makeText(getApplicationContext(),  "遷移ページ：" + que_page, Toast.LENGTH_SHORT).show();
+        //ヘルプ画面からの遷移の場合、途中からタイマースタート
+        if(que_page == 1){
+            long que_elapsedTime = intent.getLongExtra("elapsed_time", 0);
+//            Toast.makeText(getApplicationContext(),  "タイマー：" + que_elapsedTime, Toast.LENGTH_SHORT).show();
+            elapsedTime += que_elapsedTime;
+        }
+
+        isChronometerRunning = true; // 初期状態を「動作中」に設定
+        chronometer.setBase(SystemClock.elapsedRealtime() - elapsedTime); // 初期値を設定
+//        chronometer.setText(formatElapsedTime(0)); // 初期表示を「00:00:00」に設定
+        chronometer.setText(formatElapsedTime(elapsedTime));
         chronometer.setOnChronometerTickListener(chronometer -> {
             long elapsedMillis = SystemClock.elapsedRealtime() - chronometer.getBase();
             chronometer.setText(formatElapsedTime(elapsedMillis)); // フォーマットした時間をセット
         });
+
+        // タイマーを自動スタート
+        chronometer.start();//付けたし
 
         //マップボタンの設定
         // FusedLocationProviderClientのインスタンスを作成
@@ -181,24 +205,23 @@ public class TimerActivity extends AppCompatActivity {
 
 //    Toast.makeText(this, requestCode + "権限" + grantResults[0], Toast.LENGTH_SHORT).show();
         if (requestCode == 101) {
-            if(ContextCompat.checkSelfPermission(TimerActivity.this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED){
+            if(ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED){
 //                Toast.makeText(this, "カメラ使用許可", Toast.LENGTH_SHORT).show();
-                openCamera();
+                openCameraApp();
+//                openCamera();
             }
 //        Toast.makeText(this, "*" + (Manifest.permission.CAMERA) , Toast.LENGTH_SHORT).show();
 //
         }else if(requestCode == 1000){
             if(grantResults[0] == PackageManager.PERMISSION_GRANTED){
                 //再チェック
-                if(ActivityCompat.checkSelfPermission(TimerActivity.this
+                if(ActivityCompat.checkSelfPermission(this
                         , Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED){
                     return;
                 }
-
                 //位置情報追跡開始
                 _fusedLocationClient.requestLocationUpdates(_locationRequest , _onUpdateLocation , Looper.getMainLooper());
             }
-
         }
     }
 
@@ -225,22 +248,33 @@ public class TimerActivity extends AppCompatActivity {
         return true;
     }
     // カメラ起動
-    private void openCamera() {
-        Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-//        Toast.makeText(this, "openCamera", Toast.LENGTH_SHORT).show();
-        if (cameraIntent.resolveActivity(getPackageManager()) != null) {
-            startActivityForResult(cameraIntent, CAMERA_REQUEST_CODE);
+    // カメラアプリを起動
+    private void openCameraApp() {
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+
+        // カメラアプリがインストールされているか確認
+        if (intent.resolveActivity(getPackageManager()) != null) {
+//           onUserLeaveHint();
+            startActivity(intent); // カメラアプリを起動
         } else {
-            Toast.makeText(this, "カメラが利用できません", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "カメラアプリが見つかりません", Toast.LENGTH_SHORT).show();
         }
     }
-
     //カメラ関連ここまで
 
+
+    //アプリがフォアグラウンドに戻った時
     //位置情報追跡
     @Override
     protected void onResume(){
         super.onResume();
+
+        // タイマーが停止中の場合のみ再開
+        if (!isChronometerRunning) {
+            chronometer.setBase(SystemClock.elapsedRealtime() - elapsedTime);
+            chronometer.start();
+            isChronometerRunning = true;
+        }
 
         //ACCESS_FINE_LOCATIONの許可がない場合
         if(ActivityCompat.checkSelfPermission(TimerActivity.this
@@ -350,7 +384,12 @@ public class TimerActivity extends AppCompatActivity {
 
     //ヘルプ画面遷移
     private void navigateToHelpViewActivity() {
+        chronometer.stop();
+        elapsedTime = SystemClock.elapsedRealtime() - chronometer.getBase();
+//        Toast.makeText(getApplicationContext(), "計測時間" + elapsedTime, Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(this, HelpViewActivity.class);
+        intent.putExtra("que_elapsed_time", elapsedTime);
+        intent.putExtra("que", 1);
         startActivity(intent);
         finish();
     }
@@ -648,5 +687,22 @@ public class TimerActivity extends AppCompatActivity {
         tvResults.setVisibility(View.GONE); // 検索結果を非表示
         btnSearch.setVisibility(View.VISIBLE); // 検索ボタンを再表示
     }
+
+//テスト
+    @Override
+    public void onUserLeaveHint(){
+        super.onUserLeaveHint();
+        //ホームボタンが押された時や、他のアプリが起動した時に呼ばれる
+        //戻るボタンが押された場合には呼ばれない
+//        navigateToRecordActivity();
+//        Toast.makeText(getApplicationContext(), "Good bye!" , Toast.LENGTH_SHORT).show();
+        // タイマーが動作中の場合のみ停止
+        if (isChronometerRunning) {
+            chronometer.stop();
+            elapsedTime = SystemClock.elapsedRealtime() - chronometer.getBase();
+            isChronometerRunning = false;
+        }
+    }
+
 
 }
